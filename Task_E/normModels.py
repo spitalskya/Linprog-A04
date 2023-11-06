@@ -4,7 +4,7 @@ from scipy.optimize import linprog, OptimizeResult
 from typing import List
 
 
-class L1Model:
+class Model:
     y: np.array
     x_vect: List[np.array]
     var_count: int
@@ -13,7 +13,7 @@ class L1Model:
     solved: OptimizeResult
     beta: np.array
 
-    def __init__(self, dependent_vect: np.array, independent_vect: List[np.array]) -> None:
+    def __init__(self, dependent_vect: np.array, independent_vect: np.array) -> None:
         # dependent vector of variables
         self.y = dependent_vect
         # list of independent vectors of variables
@@ -29,6 +29,12 @@ class L1Model:
         # beta values
         self.beta = None
 
+
+class L1Model(Model):
+
+    def __init__(self, dependent_vect: np.array, independent_vect: np.array):
+        super().__init__(dependent_vect, independent_vect)
+
     def solve(self) -> np.array:
         # form LP
         c = np.array([0] * self.space_dim + [1] * self.var_count)
@@ -42,5 +48,19 @@ class L1Model:
         return self.beta
 
 
+class LInfModel(Model):
 
+    def __init__(self, dependent_vect: np.array, independent_vect: np.array):
+        super().__init__(dependent_vect, independent_vect)
 
+    def solve(self) -> np.array:
+        # form LP
+        c = np.array([0] * self.space_dim + [1])
+        A = np.vstack([np.array([1] * self.var_count), self.x_vect]).transpose()
+        ones = np.array([[1] * self.var_count]).transpose()
+        A_ub = np.block([[-A, -ones], [A, -ones]])
+        b_ub = np.concatenate([-self.y, self.y])
+        # solve
+        self.solved = linprog(c, A_ub, b_ub)
+        self.beta = self.solved.x[: self.space_dim]
+        return self.beta
