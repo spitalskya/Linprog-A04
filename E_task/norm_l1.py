@@ -31,9 +31,9 @@ class L1Model:
 
     def solve(self) -> np.array:
         # form LP
-        c = np.array([0] * self.space_dim + [1] * self.x_dim * self.var_count)
+        c = np.array([0] * self.space_dim + [1] * self.var_count)
         A = np.vstack([np.array([1] * self.var_count), self.x_vect]).transpose()
-        I = np.hstack([np.identity(self.var_count)] * self.x_dim)
+        I = np.identity(self.var_count)
         A_ub = np.block([[-A, -I], [A, -I]])
         b_ub = np.concatenate([-self.y, self.y])
         # solve
