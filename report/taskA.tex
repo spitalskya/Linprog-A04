@@ -1,0 +1,82 @@
+\documentclass[12pt,oneside,a4paper,slovak]{article}           
+
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage[skip=0pt]{caption}
+\usepackage{listings}
+
+
+\renewcommand{\rmdefault}{phv} % Arial
+\renewcommand{\sfdefault}{phv} % Arial
+\renewcommand{\baselinestretch}{1}
+\newcommand*{\vertbar}{\rule[0ex]{0.3pt}{1.5ex}}
+\newcommand*{\horzbar}{\rule[0ex]{1.5ex}{0.3pt}}
+
+\usepackage[T1]{fontenc}                % slovencina
+\usepackage[utf8]{inputenc}
+\usepackage[slovak]{babel}
+
+\usepackage{geometry}
+
+\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm, headheight=0.6cm, headsep=0.3cm, footskip=1cm}
+
+\usepackage[final]{hyperref}
+
+\begin{document}   
+
+\section*{Úloha A}
+
+Máme dané vektory $y, x_1, x_2, \dots, x_k$. Chceme nájsť parametre $\beta_0, \beta_1,\dots,\beta_k$ také, aby pre vektor $\hat{y} = \beta_0 + \beta_1x_1 + \dots + \beta_kx_k$, boli normy $||y - \hat{y}||_1$ a $||y - \hat{y}||_{\infty}$ minimálne. Chceme teda riešiť úlohy $min ||y - \hat{y}||_1$ a $min ||y - \hat{y}||_{infty}$, pre $k+1$-rozmerný vektor parametrov $\beta$.
+
+\subsection*{Minimalizovanie $L^1$ normy}
+
+Prevedieme problém zo zadania do tvaru:
+
+\begin{align*}
+	\text{min}~ &c^Tx\\
+	Ax &\leq b
+\end{align*}
+
+Zaveďme si nový vektor premenných $t$, ktorým ohraničíme normu $||y - \hat{y}||_1$.
+
+\begin{align*}
+	y - \hat{y} &\leq t \\
+	y - \hat{y} &\geq -t
+\end{align*}	
+
+Pre prvé ohraničenie, odseparujme premenné od konštánt a preveďme do maticového tvaru.
+
+% pridat znamienka a vektor t
+
+\begin{align*}
+	- (\beta_0 + \beta_1x_1 + \dots + \beta_kx_k) - t &\leq -y \\
+	\left(
+	\begin{array}{cccccc}
+		\vertbar & \vertbar & \vertbar &  & \vertbar &  \\
+		\mathbf{1}_n & x_1 & x_2 & \dots & x_k & \mathbb{I}_n\\
+		\vertbar & \vertbar & \vertbar &  & \vertbar &
+	\end{array}
+	\right)
+	\left(
+	\begin{array}{c}
+		\vertbar \\
+		\beta \\
+		\vertbar \\
+		\horzbar \\
+		\vertbar \\
+		t \\
+		\vertbar
+	\end{array}
+	\right) &\leq y
+\end{align*}
+
+
+
+\end{document}
