@@ -43,7 +43,7 @@ class L1Model(Model):
         A_ub = np.block([[-A, -I], [A, -I]])
         b_ub = np.concatenate([-self.y, self.y])
         # solve
-        self.solved = linprog(c, A_ub, b_ub)
+        self.solved = linprog(c, A_ub, b_ub, bounds=(None, None))
         self.beta = self.solved.x[: self.space_dim]
         return self.beta
 
@@ -61,6 +61,6 @@ class LInfModel(Model):
         A_ub = np.block([[-A, -ones], [A, -ones]])
         b_ub = np.concatenate([-self.y, self.y])
         # solve
-        self.solved = linprog(c, A_ub, b_ub)
+        self.solved = linprog(c, A_ub, b_ub, bounds=(None, None))
         self.beta = self.solved.x[: self.space_dim]
         return self.beta
