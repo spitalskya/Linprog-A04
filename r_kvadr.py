@@ -21,10 +21,14 @@ class Model:
         result = 1 - (res1 / res2)
         return result
 
-
+'''
 xvectors = ['Year', 'WinterRain', 'AGST', 'HarvestRain', 'Age', 'FrancePop']
 model = Model()
 r2_l1 = model.r_kvadr('data/A04wine.csv', L1Model, xvectors)
 r2_linf = model.r_kvadr('data/A04wine.csv', LInfModel, xvectors)
 print(f'R-squared L1: {r2_l1}')
 print(f'R-squared LInf: {r2_linf}')
+'''
+
+diabetes = pd.read_csv('data/diabetes.csv')
+x_names = ['Pregnancies','Glucose','BloodPressure','SkinThickness','Insulin','BMI','DiabetesPedigreeFunction','Age']
