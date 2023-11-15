@@ -59,11 +59,16 @@ if __name__ == '__main__':
     #     random_linf_2dplot(axes[i], data)
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    data = data_3d()
-    random_l1_3dplot(ax, data)
+    # data = data_3d()
+    # random_l1_3dplot(ax, data)
+
+    diabetes = pd.read_csv('data/diabetes.csv').sample(40)
+    x1 = np.array(diabetes['Glucose'])
+    x2 = np.array(diabetes['BMI'])
+    y = np.array(diabetes['Outcome'])
+
+    model = L1Model(y, np.array([x1, x2]))
+    model.solve()
+
+    reg_plot3d(x1, x2, y, model, ax)
     plt.show()
-
-
-
-
-
