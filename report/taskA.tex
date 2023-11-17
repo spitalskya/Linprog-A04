@@ -1,0 +1,227 @@
+\documentclass[12pt,oneside,a4paper,slovak]{article}           
+
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{pythonhighlight}
+\usepackage[skip=0pt]{caption}
+\usepackage{geometry}
+\usepackage[final]{hyperref}
+\usepackage[T1]{fontenc}                % slovencina
+\usepackage[utf8]{inputenc}
+\usepackage[slovak]{babel}
+
+\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm, headheight=0.6cm, headsep=0.3cm, footskip=1cm}
+
+\renewcommand{\rmdefault}{phv} % Arial
+\renewcommand{\sfdefault}{phv} % Arial
+\renewcommand{\baselinestretch}{1}
+\newcommand*{\vertbar}{\rule[0ex]{0.3pt}{1.5ex}}
+\newcommand*{\horzbar}{\rule[0ex]{1.5ex}{0.3pt}}
+
+
+\begin{document}   
+
+\section*{Úloha A}
+
+Máme dané vektory $y, x_1, x_2, \dots, x_k$. Chceme nájsť parametre $\beta_0, \beta_1,\dots,\beta_k$ také, aby pre vektor $\hat{y} = \beta_0 + \beta_1x_1 + \dots + \beta_kx_k$, boli normy $||y - \hat{y}||_1$ a $||y - \hat{y}||_{\infty}$ minimálne. 
+
+Vyjadrime vektor $\hat{y}$ ako súčin matice a vektora $\beta = (\beta_0, \beta_1, \dots, \beta_k)$.
+
+\begin{align*}
+	\hat{y} = \beta_0 + \beta_1x_1 + \dots + \beta_kx_k = 
+	\left(
+		\begin{array}{ccccc}
+			\vertbar & \vertbar & \vertbar &  & \vertbar \\
+			\mathbf{1}_n & x_1 & x_2 & \dots & x_k \\
+			\vertbar & \vertbar & \vertbar &  & \vertbar
+		\end{array}
+	\right)
+	\beta
+	=\colon
+	\mathbf{A} \beta
+\end{align*}
+
+\subsection*{Minimalizovanie $L^1$ normy}
+
+Prevedieme problém zo zadania do tvaru:
+
+\begin{align*}
+	\text{min}~ &c^Tx\\
+	Ax &\leq b
+\end{align*}
+
+Tento tvar vyžaduje metóda \pyth|linprog| z knižnice \pyth|scipy.optimize| pre Python.
+
+Zaveďme si nový vektor premenných $t \in \mathbb{R}^n$, ktorým ohraničíme normu $||y - \mathbf{A} \beta||_1$.
+
+\begin{align*}
+	-t \leq y - \mathbf{A} \beta &\leq t
+\end{align*}	
+
+Pre prvé ohraničenie, odseparujme premenné od konštánt a preveďme do maticového tvaru.
+
+\begin{align*}
+	- \mathbf{A} \beta - t &\leq -y \\
+	\left(
+		\begin{array}{c|c}
+			-\mathbf{A} & -\mathbb{I}_n
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{c}
+			\boldsymbol{\beta} \\
+			\hline
+			t
+		\end{array}
+	\right) &\leq -y
+\end{align*}
+
+Podobne pre druhé ohraničenie.
+
+\begin{align*}
+	\mathbf{A} \beta - t &\leq y \\
+	\left(
+		\begin{array}{c|c}
+			\mathbf{A} & -\mathbb{I}_n
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{c}
+			\beta \\
+			\hline
+			t
+		\end{array}
+	\right) &\leq y
+\end{align*}
+
+Minimalizovanie $L^{1}$ normy ako úloha lineárneho programovania vyzerá teda nasledovne.
+
+\begin{align*}
+	\text{min}~ &
+	\left(
+		\begin{array}{c|c}
+			\mathbf{0}_{k+1} & \mathbf{1}_n
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{c}
+			\beta \\
+			\hline
+			t
+		\end{array}
+	\right) \\
+	&\left(
+		\begin{array}{c|c}
+			-\mathbf{A} & -\mathbb{I}_n \\
+			\hline
+			\mathbf{A} & -\mathbb{I}_n
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{c}
+			\beta \\
+			\hline
+			t
+		\end{array}
+	\right)
+	\leq
+	\left(
+		\begin{array}{c}
+			-y \\
+			\hline
+			y
+		\end{array}
+	\right)
+\end{align*}
+
+\newpage
+
+\subsection*{Minimalizovanie $L^{\infty}$ normy}
+
+Budeme používať podobné značenie ako pri formulácii $L^1$ normy. Zaveďme si skalár $\gamma \in \mathbb{R}$, ktorým ohraničíme normu $||y - \mathbf{A} \beta||_{\infty}$.
+
+\begin{align*}
+	-\gamma \mathbf{1}_n \leq y - \mathbf{A} \beta &\leq \gamma \mathbf{1}_n
+\end{align*}
+
+Pre jednotlivé ohraničenia odseparujeme premenné od konštánt a zapíšeme v maticovom tvare.
+
+\begin{align*}
+	\left(
+		\begin{array}{c|c}
+			-\mathbf{A} & -\mathbf{1}_n
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{c}
+			\beta \\
+			\hline
+			\gamma
+		\end{array}
+	\right) &\leq -y \\
+	\left(
+		\begin{array}{c|c}
+			\mathbf{A} & -\mathbf{1}_n
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{c}
+			\beta \\
+			\hline
+			\gamma
+		\end{array}
+	\right) &\leq y \\
+\end{align*}
+
+Minimalizovanie $L^{\infty}$ normy ako úloha lineárneho programovania vyzerá teda nasledovne.
+
+
+\begin{align*}
+	\text{min}~ &
+	\left(
+		\begin{array}{c|c}
+			\mathbf{0}_{k+1} & 1
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{c}
+			\beta \\
+			\hline
+			\gamma
+		\end{array}
+	\right) \\
+	&\left(
+		\begin{array}{c|c}
+			-\mathbf{A} & -\mathbf{1}_n \\
+			\hline
+			\mathbf{A} & -\mathbf{1}_n
+		\end{array}
+	\right)
+	\left(
+		\begin{array}{c}
+			\beta \\
+			\hline
+			\gamma
+		\end{array}
+	\right)
+	\leq
+	\left(
+		\begin{array}{c}
+			-y \\
+			\hline
+			y
+		\end{array}
+	\right)
+\end{align*}
+
+
+
+\end{document}
