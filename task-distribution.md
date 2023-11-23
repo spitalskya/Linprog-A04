@@ -3,6 +3,9 @@
 ## A
 - [x] Tomáš - matika
 - [x] Andrej - spísať Latex
+- [ ] Andrej - spísať optimalitu úlohy
+  - [ ] skontrolovať transpozície
+  - [ ] checknúť, či silná dualita je to, čo tvrdím
 
 ## B
 - [x] Tomáš - spísanie do kódu
@@ -33,6 +36,7 @@
 - [ ] porovnanie s najmenšími štvorcami
   
 ## Report kódu
+- [ ] preformulovať úlohu do tvaru pre `scipy.optimize.linprog`
 - [x] Robo - spísanie kódu do reportu
 - [ ] pridať nový kód keď bude
 - [ ] viac popísať jednotlivé časti?
