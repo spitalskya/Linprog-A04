@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Union
 import numpy as np
 from scipy.optimize import linprog, OptimizeResult
 from typing import List
@@ -28,6 +29,25 @@ class Model:
         self.solved = None
         # beta values
         self.beta = None
+
+    def r_kvadr(self, norm: Union[L1Model, LInfModel]) -> float:        
+        model = norm(self.y, self.x_vect)
+        betas = model.solve()
+
+        y_hat = betas[0] + np.dot(self.x_vect.transpose(), betas[1:])
+        y_mean = np.mean(self.y)
+
+        # print(self.y - y_hat)
+
+        res1 = 0
+        res2 = 0
+
+        for i in range(len(self.y)):
+            res1 += (self.y[i] - y_hat[i]) ** 2
+            res2 += (self.y[i] - y_mean) ** 2
+
+        result = 1 - (res1 / res2)
+        return result
 
 
 class L1Model(Model):
