@@ -5,20 +5,21 @@
 - [x] Andrej - spísať Latex
 - [ ] Andrej - spísať optimalitu úlohy
   - [ ] skontrolovať transpozície
-  - [ ] checknúť, či silná dualita je to, čo tvrdím
+  - [x] checknúť, či silná dualita je to, čo tvrdím
 
 ## B
 - [x] Tomáš - spísanie do kódu
-- [ ] spraviť pekný graf - priamky nie úsečky
-- [ ] spraviť z toho prezentovateľný kód
-- [ ] opraviť ohraničenia ($\beta$ reálna, $t$ kladné)
+- [ ] Tomáš / Teo - spraviť pekný graf - priamky nie úsečky
+- [ ] Tomáš / Teo - nastyleovať graf
+- [ ] Tomáš / Teo - spraviť z toho prezentovateľný kód
+- [ ] Tomáš / Teo - opraviť ohraničenia ($\beta$ reálna, $t$ kladné)
 
 ## C
 - [x] Teo - vypracovanie vín
-- [ ] spraviť z toho prezentovateľný kód
-  - [ ] okomentovať
-  - [ ] opraviť ohraničenia ($\beta$ reálna, $t$ kladné)
-  - [ ] pekné názvy premenných
+- [x] spraviť z toho prezentovateľný kód
+  - [x] okomentovať
+  - [x] opraviť ohraničenia ($\beta$ reálna, $t$ kladné)
+  - [x] pekné názvy premenných
 
 ## D
 - [x] Robo - spočítanie R-kvadrátu
@@ -27,16 +28,15 @@
 
 ## E
 - [x] Erik - spraviť peknú Classu na L1 a Linf regresiu
-- [ ] opraviť ohraničenia ($\beta$ reálna, $t$ kladné)
-- [ ] vyriešiť prípustnosť modelu
-- [ ] kedy je L1 alebo LInf lepšia (L2)
-- [ ] zakomponovať vizualizáciu do Model (pre 2D, 3D)
-- [ ] demonštrácia modelu s pseudonáhodnými dátami
+- [ ] Erik - zakomponovať vizualizáciu do Model (pre 2D, 3D)
+- [ ] Erik - demonštrácia modelu s pseudonáhodnými dátami
   - [ ] vygenerovať pngs
-- [ ] porovnanie s najmenšími štvorcami
+- [ ] Erik - opraviť ohraničenia ($\beta$ reálna, $t$ kladné)
+- [ ] Andrej - matematicky kedy je L1 alebo LInf lepšia (L2)
+
   
 ## Report kódu
-- [ ] preformulovať úlohu do tvaru pre `scipy.optimize.linprog`
+- [ ] Andrej - preformulovať úlohu do tvaru pre `scipy.optimize.linprog`
 - [x] Robo - spísanie kódu do reportu
 - [ ] pridať nový kód keď bude
 - [ ] viac popísať jednotlivé časti?
