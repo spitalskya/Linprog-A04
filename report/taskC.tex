@@ -1,0 +1,76 @@
+\documentclass[12pt,oneside,a4paper,slovak]{article}           
+
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{pythonhighlight}
+\usepackage[skip=0pt]{caption}
+\usepackage{geometry}
+\usepackage[final]{hyperref}
+\usepackage[T1]{fontenc}                % slovencina
+\usepackage[utf8]{inputenc}
+\usepackage[slovak]{babel}
+
+\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm, headheight=0.6cm, headsep=0.3cm, footskip=1cm}
+
+\renewcommand{\rmdefault}{phv} % Arial
+\renewcommand{\sfdefault}{phv} % Arial
+\renewcommand{\baselinestretch}{1}
+\newcommand*{\vertbar}{\rule[0ex]{0.3pt}{1.5ex}}
+\newcommand*{\horzbar}{\rule[0ex]{1.5ex}{0.3pt}}
+
+
+\begin{document}   
+
+\section*{Úloha C}
+Načítali sme dáta a uložili do premenných $y$ - (závislá premenná price), $x$ - (všetky premenné od ktorých cena závisí)
+\begin{python}
+data = pd.read_csv('data\A04wine.csv')
+y = data['Price']
+x = data[['WinterRain','AGST', 'HarvestRain', 'Age', 'FrancePop']]
+numberOfVariablesBeta = x.shape[1]+1
+\end{python}
+\begin{python}
+#l1 norm
+c = np.array([0]*numberOfVariablesBeta + [1] * len(x.values))
+ALeft = np.matrix([ [1] * len(x.values)]).transpose()
+ARigth = np.matrix(x.values)
+A = np.block([ALeft, ARigth])
+I = np.identity(len(x.values))   
+\end{python}
+
+\begin{python}
+A_ub = np.block([[-A, -I], [A, -I]])
+b_ub = np.concatenate([-y, y])
+solve = linprog(c, A_ub, b_ub)
+\end{python}
+Vypočítali sme $\beta$ koeficienty
+\begin{python}
+bethas = solve.x[:numberOfVariablesBeta]
+print(bethas)
+\end{python}
+A to isté pre $L^\infty$.
+\begin{python}
+#l inf norm
+c_inf = np.array([0]*numberOfVariablesBeta + [1])
+A_inf = np.block([ALeft, ARigth])
+i_inf = np.array([ [1] * len(x.values)]).transpose()
+
+A_ub_inf = np.block([[-A_inf,-i_inf],[A_inf,-i_inf]])
+b_ub_inf = np.concatenate([-y, y])
+solve_inf = linprog(c_inf, A_ub_inf, b_ub_inf)
+
+bethas_inf = solve_inf.x[:numberOfVariablesBeta]
+print(bethas_inf)
+\end{python}
+
+
+
+\end{document}
