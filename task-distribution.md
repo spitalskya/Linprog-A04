@@ -23,7 +23,7 @@
 
 ## D
 - [x] Robo - spočítanie R-kvadrátu
-- [ ] pridať do classy Model (Erikovej)
+- [ ] Robo - pridať do classy Model (Erikovej)
   - [ ] spraviť všeobecný prípad
 
 ## E
