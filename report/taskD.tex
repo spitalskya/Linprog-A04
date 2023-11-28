@@ -1,0 +1,82 @@
+\documentclass[12pt,oneside,a4paper,slovak]{article}           
+
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{pythonhighlight}
+\usepackage[skip=0pt]{caption}
+\usepackage{geometry}
+\usepackage[final]{hyperref}
+\usepackage[T1]{fontenc}                % slovencina
+\usepackage[utf8]{inputenc}
+\usepackage[slovak]{babel}
+
+\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm, headheight=0.6cm, headsep=0.3cm, footskip=1cm}
+
+\renewcommand{\rmdefault}{phv} % Arial
+\renewcommand{\sfdefault}{phv} % Arial
+\renewcommand{\baselinestretch}{1}
+\newcommand*{\vertbar}{\rule[0ex]{0.3pt}{1.5ex}}
+\newcommand*{\horzbar}{\rule[0ex]{1.5ex}{0.3pt}}
+
+
+\begin{document}   
+
+\section*{Úloha D}
+TODO POPIS IMPORTY etc
+\begin{python}
+from typing import Union
+import numpy as np
+import pandas as pd
+from Task_E.normModels import L1Model, LInfModel
+\end{python}
+Funkcia je súčasťou triedy Model, vstupy sú riadkové vektory x, stĺpcový vektor y, a ako normu Union[L1Model, LInfModel], počíta R kvadrát podľa definície \begin{math}
+R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}
+\end{math}
+
+\begin{python}
+class Model:
+    def r_kvadr(self, x, y, norm: Union[L1Model, LInfModel]) -> float:        
+        model = norm(y, x)
+        betas = model.solve()
+
+        y_hat = betas[0] + np.dot(x.transpose(), betas[1:])
+        y_mean = np.mean(y)
+
+        print(y - y_hat)
+
+        res1 = 0
+        res2 = 0
+
+        for i in range(len(y)):
+            res1 += (y[i] - y_hat[i]) ** 2
+            res2 += (y[i] - y_mean) ** 2
+
+        result = 1 - (res1 / res2)
+        return result
+\end{python}
+Využitie:
+\begin{python}
+diabetes = pd.read_csv('data/diabetes.csv')
+x_names = ['Pregnancies','BloodPressure','SkinThickness','Insulin','BMI','DiabetesPedigreeFunction','Age']
+x = diabetes[x_names].to_numpy().transpose()
+y = diabetes['Glucose']
+model = Model()
+
+r2_l1 = model.r_kvadr(x, y, L1Model)
+r2_linf = model.r_kvadr(x, y, LInfModel)
+
+print(f'R-squared L1: {r2_l1}')
+print(f'R-squared LInf: {r2_linf}')
+\end{python}
+
+
+
+\end{document}
