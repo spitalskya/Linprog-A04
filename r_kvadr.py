@@ -1,7 +1,7 @@
 from typing import Union
 import numpy as np
 import pandas as pd
-from Task_E.normModels import L1Model, LInfModel
+from models.models import L1Model, LInfModel
 
 class Model:
     def r_kvadr(self, path: str, norm: Union[L1Model, LInfModel], xcols: list) -> float:

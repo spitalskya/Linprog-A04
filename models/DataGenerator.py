@@ -13,7 +13,7 @@ class DataGenerator:
     def gen_2d_data(self, start: int, finish: int, size: int, noise=(0, 0)):
         beta0, beta1 = 0, 0
         while beta1 == 0:
-            beta0, beta1 = np.random.randint(-10, 10, size=2)
+            beta0, beta1 = np.random.randint(-5, 5, size=2)
 
         self.betas = [beta0, beta1]
         self.max_noise = noise
