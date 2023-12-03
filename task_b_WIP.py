@@ -29,7 +29,8 @@ A_inf = np.matrix([[1] * len(x), x]).transpose()
 i_inf = np.array([[1] * len(x)]).transpose() # vector of ones
 A_ub_inf = np.block([[-A_inf, -i_inf], [A_inf, -i_inf]]) # creating a block matrix
 b_ub_inf = np.concatenate([-y, y])#right side vector
-solve_inf = linprog(c_inf, A_ub_inf, b_ub_inf) #solving the problem
+bounds = [(None, None), (None, None), (0, None)]
+solve_inf = linprog(c_inf, A_ub_inf, b_ub_inf, bounds=bounds) #solving the problem
 beta0_inf = solve_inf.x[0] #extracting betas
 beta1_inf = solve_inf.x[1]
 
