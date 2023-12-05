@@ -40,8 +40,8 @@ x = diabetes[x_names].to_numpy().transpose()
 y = diabetes['Glucose']
 model = Model(y, x)
 
-r2_l1 = model.r_kvadr(L1Model)
-r2_linf = model.r_kvadr(LInfModel)
+r2_l1 = model.r2(L1Model)
+r2_linf = model.r2(LInfModel)
 
 print(f'R-squared L1: {r2_l1}')
 print(f'R-squared LInf: {r2_linf}')
