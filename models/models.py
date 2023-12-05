@@ -2,7 +2,6 @@ from __future__ import annotations
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import linprog
-from typing import Union
 
 
 class Model:
@@ -39,14 +38,18 @@ class Model:
         # set model_type
         self.model_type = ""
 
-    def r2(self, norm: Union[L1Model, LInfModel]) -> float:        
-        model = norm(self.y, self.x_vect)
-        betas = model.solve()
+    def r2(self) -> float:
+        """
+        Calculates the r2 of the value.
+        :return: r2 value
+        """
 
-        y_hat = betas[0] + np.dot(self.x_vect.transpose(), betas[1:])
+        if len(self.beta) == 0:
+            print('Model is not solved')
+            return 0.0
+
+        y_hat = self.beta[0] + np.dot(self.x_vect.transpose(), self.beta[1:])
         y_mean = np.mean(self.y)
-
-        # print(self.y - y_hat)
 
         res1 = 0
         res2 = 0
