@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from models.models import L1Model, LInfModel
 
+###DATED##############################################################################################################
 class Model:
     def r_kvadr(self, path: str, norm: Union[L1Model, LInfModel], xcols: list) -> float:
         data = pd.read_csv('Linprog-A04/'+path)
