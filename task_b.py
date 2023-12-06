@@ -46,6 +46,5 @@ plt.grid(True, linestyle='--', alpha=0.7) #plotting a grid
 ax.spines['top'].set_visible(False) #hiding the right and top axis
 ax.spines['right'].set_visible(False)
 plt.title("The comparison between norms") #setting a title
-plt.savefig('task_b_plot.png')
 plt.show() #showing the whole plot
 
