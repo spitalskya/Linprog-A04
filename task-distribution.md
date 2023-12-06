@@ -25,6 +25,7 @@
 - [x] Robo - spočítanie R-kvadrátu
 - [x] Robo - pridať do classy Model (Erikovej)
   - [x] spraviť všeobecný prípad
+- [ ] Andrej - prepísať to tak, aby to nevyužívalo `Model.r2()`
 
 ## E
 - [x] Erik - spraviť peknú Classu na L1 a Linf regresiu
