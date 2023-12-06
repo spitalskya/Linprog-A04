@@ -1,7 +1,6 @@
 # importing required libraries
 import numpy as np
 from scipy.optimize import linprog
-import pandas as pd
 import matplotlib.pyplot as plt
 
 #loading data
