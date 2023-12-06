@@ -30,6 +30,109 @@
 \begin{document}   
 
 \section*{Úloha B}
+
+
+\subsubsection*{Prevedenie úlohy LP do tvaru pre \pyth|scipy.optimize.linprog|}
+
+Metóda \pyth|linprog| z modulu \pyth|scipy.optimize| vyžaduje nasledujúci tvar úlohy LP:
+
+\begin{align*}
+	\text{min}~ &c^Tx\\
+	&A_{ub}x \leq b_{ub} \\
+	&A_{eq}x \leq b_{eq} \\
+	&l \leq x \leq u & l,u \in (\mathbb{R}\cup \{\text{\pyth|None|\}})^n 
+\end{align*}
+
+Hodnota \pyth|None| vo vektoroch $l,~u$ značí neohraničenosť v danom smere. Upravme teda úlohy vyjadrené vyššie do predpísaného tvaru.
+
+Pre $L^1$ regresiu:
+
+\begin{align*}
+	\text{min}~ &
+	\left(
+	\begin{array}{c|c}
+		\mathbf{0}_{k+1}^T & \mathbf{1}_n^T
+	\end{array}
+	\right)
+	\left(
+	\begin{array}{c}
+		\beta \\
+		\hline
+		t
+	\end{array}
+	\right) \\
+	&\left(
+	\begin{array}{c|c}
+		-\mathbf{A} & -\mathbb{I}_n \\
+		\hline
+		\mathbf{A} & -\mathbb{I}_n
+	\end{array}
+	\right)
+	\left(
+	\begin{array}{c}
+		\beta \\
+		\hline
+		t
+	\end{array}
+	\right)
+	\leq
+	\left(
+	\begin{array}{c}
+		-y \\
+		\hline
+		y
+	\end{array}
+	\right) \\
+	&\text{\pyth|None|} \leq \beta_i \leq \text{\pyth|None|} &i = 0,1,\dots,k\\
+	&0 \leq t_j \leq \text{\pyth|None|} &j = 1,\dots,n
+\end{align*}
+
+Pre $L^{\infty}$ regresiu:
+
+\begin{align*}
+	\text{min}~ &
+	\left(
+	\begin{array}{c|c}
+		\mathbf{0}_{k+1}^T & 1
+	\end{array}
+	\right)
+	\left(
+	\begin{array}{c}
+		\beta \\
+		\hline
+		\gamma
+	\end{array}
+	\right) \\
+	&\left(
+	\begin{array}{c|c}
+		-\mathbf{A} & -\mathbf{1}_n \\
+		\hline
+		\mathbf{A} & -\mathbf{1}_n
+	\end{array}
+	\right)
+	\left(
+	\begin{array}{c}
+		\beta \\
+		\hline
+		\gamma
+	\end{array}
+	\right)
+	\leq
+	\left(
+	\begin{array}{c}
+		-y \\
+		\hline
+		y
+	\end{array}
+	\right) \\
+	&\text{\pyth|None|} \leq \beta_i \leq \text{\pyth|None|} &i = 0,1,\dots,k\\
+	&0 \leq \gamma \leq \text{\pyth|None|}
+\end{align*}
+
+Úlohy v zdrojovom kóde sú implementované práve v tomto tvare.
+
+\subsubsection*{Implementovanie regresných LP úloh}
+
 Naimportovali sme knižnice; \pyth|numpy| na tvorenie matíc a vektorov, \pyth|scipy.optimize| na riešenie danej LP úlohy a \pyth|matplotlib| na vykresľovanie grafov.
 \begin{python}
 import numpy as np

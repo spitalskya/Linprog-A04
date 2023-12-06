@@ -17,5 +17,5 @@ l1_model.solve()
 linf_model.solve()
 
 # calculate R-squared coefficient
-print(f'R-squared for L1 regression on wine data: {l1_model.r2()}')
-print(f'R-squared for LInf regression on wine data: {linf_model.r2()}')
+print(f'R-squared for L1 regression on wine data: {l1_model.r2()}')         # 0.78813 
+print(f'R-squared for LInf regression on wine data: {linf_model.r2()}')     # 0.80649
