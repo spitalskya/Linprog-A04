@@ -36,7 +36,7 @@
 
   
 ## Other stuff
-- [ ] Andrej - preformulovať úlohu do tvaru pre `scipy.optimize.linprog`
+- [x] Andrej - preformulovať úlohu do tvaru pre `scipy.optimize.linprog`
 - [x] Robo - spísanie kódu do reportu
 - [ ] pridať nový kód keď bude
 - [ ] viac popísať jednotlivé časti?
