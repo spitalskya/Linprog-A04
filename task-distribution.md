@@ -41,3 +41,4 @@
 - [ ] pridať nový kód keď bude
 - [ ] viac popísať jednotlivé časti?
 - [ ] prezrieť ešte raz celý kód (konzistentné formátovanie, komentáre...)
+  - [ ] donútiť LaTeXový Python, aby highlightoval konzistentne (v taskB - np.array highlightne, np.matrix nie)
