@@ -33,6 +33,7 @@
 - [x] Erik - demonštrácia modelu s pseudonáhodnými dátami
   - [x] vygenerovať pngs
 - [x] Erik - opraviť ohraničenia ($\beta$ reálna, $t$ kladné)
+- [ ] nech nezbehne `visualize`, kým nie je solved (vyriešiť cez custom `Exception`?)
 - [ ] Andrej - matematicky kedy je L1 alebo LInf lepšia (L2)
 
   
