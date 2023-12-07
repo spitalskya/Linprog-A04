@@ -1,41 +1,14 @@
-\documentclass[12pt,oneside,a4paper,slovak]{article}           
-
-\usepackage{latexsym}
-\usepackage{amsfonts}
-\usepackage{amsthm}
-\usepackage{amstext}
-\usepackage{amsmath}
-\usepackage{amscd}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{titlesec}
-\usepackage{listings}
-\usepackage{pythonhighlight}
-\lstset{language=Python}
-\usepackage[skip=0pt]{caption}
-\usepackage{geometry}
-\usepackage[final]{hyperref}
-\usepackage[T1]{fontenc}                % slovencina
-\usepackage[utf8]{inputenc}
-\usepackage[slovak]{babel}
-
-\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm, headheight=0.6cm, headsep=0.3cm, footskip=1cm}
-
-\renewcommand{\rmdefault}{phv} % Arial
-\renewcommand{\sfdefault}{phv} % Arial
-\renewcommand{\baselinestretch}{1}
-\newcommand*{\vertbar}{\rule[0ex]{0.3pt}{1.5ex}}
-\newcommand*{\horzbar}{\rule[0ex]{1.5ex}{0.3pt}}
+\documentclass[report.tex]{subfiles}
 
 \begin{document}
 
-\section*{Úloha E}	
+\section{Úloha E}	
 
-\subsection*{Spracovanie všeobecnej triedy pre $L^1$ a $L^{\infty}$ regresiu}
+\subsection{Spracovanie všeobecnej triedy pre $L^1$ a $L^{\infty}$ regresiu}
 
 Vypracovali sme modul \pyth|Model| pre počítanie $L^1$ a $L^{\infty}$ regresie z ľubovoľných číselných dát, ktorý využíva LP formulácie popísané vyššie. Konkrétne \pyth|L1Model| využíva formuláciu na minimalizovanie $L^1$ normy a \pyth|LInfModel| minimalizuje $L^{\infty}$ normu. Príklad použitia tohto modelu sa nachádza v \verb|model_demonstration.ipynb| Následne opíšeme jednotlivé metódy jednotlivých modelov.
 
-\subsubsection*{\pyth|Model(dependent_vect, independent_vect)|}
+\subsubsection*{\pyth|Model.__init__(dependent_vect, independent_vect)|}
 
 Konštruktor triedy, spoločný pre oba modely, vytvorí inštanciu, ktorá si drží dáta a vie na nich vykonávať operácie popísané nižšie. 
 
@@ -77,5 +50,7 @@ Vracia:
 \begin{itemize}
 	\item \pyth|bool| - úspešnosť vizualizácie, kde \pyth|False| označuje, že nezávislých premenných je viac ako 2, čiže nie je možné vykresliť graf
 \end{itemize}
+
+
 
 \end{document}

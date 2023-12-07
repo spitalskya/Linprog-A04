@@ -18,6 +18,7 @@
 \usepackage[T1]{fontenc}                % slovencina
 \usepackage[utf8]{inputenc}
 \usepackage[slovak]{babel}
+\usepackage{verbatim}
 
 \geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm, headheight=0.6cm, headsep=0.3cm, footskip=1cm}
 
@@ -44,13 +45,13 @@
 			
 			\LARGE\textbf{A04 - Predikcia kvality vín}
 			
-			\bigskip
+			\bigskip 
 		\end{center}
 			
-		\vfill  % Vertical fill to push the following content to the bottom
+		\vfill
 		
-		\hfill  % Horizontal fill to push the following content to the right
-		\begin{minipage}{0.5\textwidth}  % Adjust the width as needed
+		\hfill
+		\begin{minipage}{0.5\textwidth}
 			\raggedleft
 			
 			\textit{Piati proti optimalizácii}
@@ -68,6 +69,9 @@
 			
 	\end{titlepage}
 	
+	\tableofcontents
+	\newpage
+	
 	\subfile{taskA}
 	\newpage
 	\subfile{taskB}
@@ -78,5 +82,8 @@
 	\newpage
 	\subfile{taskE}
 	\newpage
+	
+	% SEM SA SKOPIRUJE FINALNY REPORT
+	% input, include, subfile vzdy spravi nejake problemy
 	
 \end{document}

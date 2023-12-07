@@ -1,35 +1,8 @@
-\documentclass[12pt,oneside,a4paper,slovak]{article}           
-
-\usepackage{latexsym}
-\usepackage{amsfonts}
-\usepackage{amsthm}
-\usepackage{amstext}
-\usepackage{amsmath}
-\usepackage{amscd}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{titlesec}
-\usepackage{listings}
-\usepackage{pythonhighlight}
-\usepackage[skip=0pt]{caption}
-\usepackage{geometry}
-\usepackage[final]{hyperref}
-\usepackage[T1]{fontenc}                % slovencina
-\usepackage[utf8]{inputenc}
-\usepackage[slovak]{babel}
-
-\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm, headheight=0.6cm, headsep=0.3cm, footskip=1cm}
-
-\renewcommand{\rmdefault}{phv} % Arial
-\renewcommand{\sfdefault}{phv} % Arial
-\renewcommand{\baselinestretch}{1}
-\newcommand*{\vertbar}{\rule[0ex]{0.3pt}{1.5ex}}
-\newcommand*{\horzbar}{\rule[0ex]{1.5ex}{0.3pt}}
-
+\documentclass[report.tex]{subfiles}
 
 \begin{document}   
 
-\section*{Úloha C}
+\section{Úloha C}
 V tejto úlohe sa snažíme predikovať kvalitu vína, inšpirovaní prístupom Orleya Ashenfeltera k predikcii cien vína z Bordeaux.
 
 Využívame dáta zo súboru \verb|A04wine.csv| a aplikujeme modely $L^1$ a $L^{\infty}$ z úlohy A. Budeme využívať podobný postup ako v úlohe B. Na implementáciu formulovaných LP úloh využívame opäť:
