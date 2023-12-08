@@ -12,20 +12,20 @@ Využívame dáta zo súboru \verb|A04wine.csv| a aplikujeme modely $L^1$ a $L^{
 	\item \pyth|scipy.optimize| - implementovaný LP solver
 \end{itemize}
 
-Vyberieme z dát dané nezávislé premenné \pyth|x| a závislú premennú \pyth|y|
+Vyberieme z dát dané nezávislé premenné \pyth|x| a závislú premennú \pyth|y|:
 
 \begin{python}
 y = data['Price']
 x = data[['WinterRain','AGST', 'HarvestRain', 'Age', 'FrancePop']]
 \end{python}
 
-Zistíme počet premenných (plus 1 pre intercept)
+Z počtu nezávislých premenných získame rozmer vektora $\beta$ (+1 kvôli konŠtantnému členu):
 
 \begin{python}
 numberOfVariablesBeta = x.shape[1] + 1
 \end{python}
 
-Vytvoríme potrebné štruktúry pre zostavenie modelu normy \pyth|l1|
+Vytvoríme potrebné štruktúry pre zostavenie modelu normy $L^1$:
 
 \begin{python}
 c = np.array([0]*numberOfVariablesBeta + [1] * len(x.values)) # Objective function coefficients
@@ -46,7 +46,7 @@ b_ub = np.concatenate([-y, y])
 solve = linprog(c, A_ub, b_ub, bounds = [(None,None)]*numberOfVariablesBeta +[(0, None)])
 \end{python}
 
-Po vyriešení vyberieme z riešenia koeficienty
+Po vyriešení vyberieme z riešenia koeficienty:
 
 \begin{python}
 betas = solve.x[:numberOfVariablesBeta]
@@ -60,6 +60,8 @@ betas = solve.x[:numberOfVariablesBeta]
 \end{gather*}
 
 \newpage
+
+Z týchto výsledkov môžeme usúdiť, že najviac pozitívne vplýva na cenu vína metrika \textit{AGST - Average growing season temperature} a najsignifikantnejší negatívny vplyv má \textit{dážď počas zberu}.
 
 Ďalej zostrojíme relevantné štruktúry a naformulujeme LP pre $L^{\infty}$ normu:
 
@@ -86,7 +88,7 @@ Po čom dostaneme:
 	\beta_3^{(\infty)} \approx -3.3416\cdot 10^{-3} ,~\beta_4^{(\infty)} \approx -2.3036\cdot 10^{-2}  ,~\beta_5^{(\infty)} \approx -1.1958\cdot 10^{-4}
 \end{gather*}
 
-
+Vidíme, že aj regresia pomocou $L^{\infty}$ normy odhaduje najväčší pozitívny vplyv meetriky \textit{AGST} a najväčší negatívny vplyv \textit{dažďu počas zberu}. Zmenil sa však vplyv premennej \textit{vek} (oproti prechádzajúceu modelu) z pozitívneho na negatívny.
 
 
 \end{document}
