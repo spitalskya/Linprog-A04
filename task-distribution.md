@@ -46,4 +46,5 @@
 - [ ] prezrieť ešte raz celý kód (konzistentné formátovanie, komentáre...)
 - [ ] prezrieť celý report
   - [ ] gramatika, formátovanie, či sedia rozmery...
+  - [ ] zmeniť regresiu na lineárnu regresiu
   - [ ] donútiť LaTeXový Python, aby highlightoval konzistentne (v taskB - np.array highlightne, np.matrix nie)

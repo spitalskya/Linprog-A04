@@ -1,7 +1,7 @@
 \documentclass[report.tex]{subfiles}
 
 \begin{document}
-\section{Úloha A}
+\section{Úloha A}\label{sec:A}
 
 Máme dané vektory $y, x_1, x_2, \dots, x_k$. Chceme nájsť parametre $\beta_0, \beta_1,\dots,\beta_k$ také, aby pre vektor $\hat{y} = \beta_0 + \beta_1x_1 + \dots + \beta_kx_k$, boli normy $||y - \hat{y}||_1$ a $||y - \hat{y}||_{\infty}$ minimálne. 
 
@@ -106,8 +106,6 @@ Minimalizovanie $L^{1}$ normy ako úloha lineárneho programovania vyzerá teda 
 	&\beta \in \mathbb{R}^{k+1},~t \geq \mathbf{0}_{n} \nonumber
 \end{align}
 
-\newpage
-
 \subsubsection{Prípustnosť a optimalita}
 
 Dokážme, že \eqref{P1} je úloha, ktorá nadobúda optimálne riešenie pre ľubovoľné vektory $y, x_1, x_2, \dots, x_k$. Nech $|y| := (|y_1|, |y_2|, \dots, |y_n|)^T$ pre $y = (y_1, y_2, \dots, y_n)^T$. Ukážme prípustnosť zvolením $\beta = \mathbf{0}_{k+1}$ a $t = |y|$:
@@ -145,6 +143,8 @@ Dokážme, že \eqref{P1} je úloha, ktorá nadobúda optimálne riešenie pre �
 	\right) \\
 	|y| &\geq \mathbf{0}_{n} 
 \end{align*}
+
+\newpage
 
 Vidíme, že obe ohraničenia platia, čiže $\left(\mathbf{0}_{k+1}^T, |y|^T \right)^T$ je prípustné riešenie.
 
@@ -234,7 +234,6 @@ Pre jednotlivé ohraničenia odseparujeme premenné od konštánt a zapíšeme v
 	\right) &\geq -y \\
 \end{align*}
 
-\newpage
 
 Minimalizovanie $L^{\infty}$ normy ako úloha lineárneho programovania vyzerá teda nasledovne.
 
@@ -276,6 +275,8 @@ Minimalizovanie $L^{\infty}$ normy ako úloha lineárneho programovania vyzerá 
 	\right) \label{Pinf}\\
 	&\beta \in \mathbb{R}^{k+1},~\gamma \geq 0 \nonumber
 \end{align}
+
+\newpage
 
 \subsubsection{Prípustnosť a optimalita}
 
