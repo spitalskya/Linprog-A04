@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from models import L1Model, LInfModel
+from models import L1Model, LInfModel, L1LInfModel
 from DataGenerator import DataGenerator
 
 
@@ -93,6 +93,7 @@ def plot_3d():
 
 
 def linear_with_outlier():
+    # plot graph of linear data with one outlier with L1 regression line
     data = [[x for x in range(20, 100, 10)] + [100], 
             [2*y for y in range(20, 100, 10)] + [300]]
     
@@ -101,6 +102,7 @@ def linear_with_outlier():
     model1.visualize('models/behavior/linear_with_outlier.png')
 
 def random_with_colinear():
+    # plot graph of random data with some colinear data with L1 regression line
     data = data_2d()
     
     x = list(data[0]) + [i for i in range(min(data[0]), max(data[0]), (max(data[0]) - min(data[0])) // 15)]
@@ -111,9 +113,20 @@ def random_with_colinear():
     model1.visualize('models/behavior/random_with_colinear.png')
 
 
+def minimizing_both_norms():
+    data = [[x for x in range(20, 100, 10)] + [100], 
+        [2*y for y in range(20, 100, 10)] + [300]]
+
+
+    for i in range(0, 11):
+        model1 = L1LInfModel(np.array(data[1]), np.array([data[0]]))
+        model1.solve(omega=i / 100 + 0.3)
+        model1.visualize(f'models/behavior/minimizing_both_linear_with_outlier{i}.png')
+
 def plot_behavior():
     # linear_with_outlier()
-    random_with_colinear()
+    # random_with_colinear()
+    minimizing_both_norms()
     
 if __name__ == '__main__':
     plot_behavior()

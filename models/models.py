@@ -193,3 +193,42 @@ class LInfModel(Model):
         solved = linprog(c, A_ub, b_ub, bounds=bounds)
         self._beta = solved.x[: self.space_dim]
         return self._beta
+
+
+
+class L1LInfModel(Model):
+    """
+    Data fitting model using L infinity norm.
+    """
+
+    def __init__(self, dependent_vect: np.ndarray, independent_vect: np.ndarray):
+        super().__init__(dependent_vect, independent_vect)
+        self.model_type = 'L1 LInf norm'
+
+    def solve(self, omega: float) -> np.ndarray:
+        """
+        Minimizes sum of L1 and weighted L infinity linear programming problem.
+        :return: array of beta values
+        """
+        # form LP
+        c = np.array([0] * self.space_dim + [omega] * self.var_count + [1 - omega])
+        A = np.vstack([np.array([1] * self.var_count), self.x_vect]).transpose()
+        I = np.identity(self.var_count)
+        ones = np.array([[1] * self.var_count]).transpose()
+        zero_matrix = I * 0
+        zeroes = ones * 0
+        
+        A_ub = np.block([[-A, -I, zeroes], 
+                         [A, -I, zeroes],
+                         [-A, zero_matrix, -ones],
+                         [A, zero_matrix, -ones]])
+        b_ub = np.concatenate([-self.y, self.y, -self.y, self.y])
+        # bounds
+        beta_bounds = [(None, None) for _ in range(self.space_dim)]
+        t_bounds = [(0, None) for _ in range(self.var_count)]
+        gamma_bounds = [(0, None)]
+        bounds = beta_bounds + t_bounds + gamma_bounds
+        # solve
+        solved = linprog(c, A_ub, b_ub, bounds=bounds)
+        self._beta = solved.x[: self.space_dim]
+        return self._beta
