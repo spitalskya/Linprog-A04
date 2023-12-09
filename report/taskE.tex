@@ -57,7 +57,7 @@ Vracia:
 
 Vyššie v sekcii \ref{sec:A} sme ukázali, že implementácie lineárnej regresie pomocou merania vzdialenost $L^1$ a $L^{\infty}$ normou majú optimálne riešenie, pre ľubovoľné vstupné dáta. Snažili sme sa odpozorovať, ako sa jednotlivé prístupy odlišujú pre nejaké konkrétne dáta.
 
-V dátach, v ktorých je výrazná lineárna závislosť, minimalizovanie $L^1$ normy veľmi dobre zachytáva práve tento lineárny vzťah, aj v prítomnosti outlierov. Toto správanie vie ale viesť aj k tzv. \textit{overfittingu}. Model príliš tesne zachytáva takéto správanie, čo môže viesť k horším odhadom pre budúce pozorovania.
+V dátach, v ktorých je výrazná lineárna závislosť, minimalizovanie $L^1$ normy veľmi dobre zachytáva práve tento lineárny vzťah, aj v prítomnosti pdľahlých dát - outlierov. Toto správanie vie ale viesť aj k tzv. \textit{overfittingu}. Model príliš tesne zachytáva takéto správanie, čo môže viesť k horším odhadom pre budúce pozorovania.
 
 Na druhej strane minimalizovanie $L^{\infty}$ normy je veľmi ovplyvňované outliermi. Aj pre \enquote{jasne} lineárna dáta s nejakými chybnými pozorovaniami, tieto dátové body výrazne odklonia regresnú priamku/nadrovinu. Napriek tomu takýto odklon je menej výrazný, ako napríklad pri bežne používanej minimalizácii $L^2$ normy, čo môže byť dôvod pre používanie takejto lineárnej regresie pre dáta, kde očakávame veľa outlierov.
 
