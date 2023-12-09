@@ -161,12 +161,44 @@ def all_three_random():
     plt.title('Data fitting using all three models')
     plt.savefig('models/behavior/all_three_random.png')
 
+def linf_with_l2():
+    # plot graph of linear data with one outlier with L1 regression line
+    data = [[x for x in range(20, 100, 5)] + [100, 105, 110, 115], 
+            [2*y for y in range(20, 100, 5)] + [300, 305, 310, 315]]
+    
+    model1 = LInfModel(np.array(data[1]), np.array([data[0]]))
+    betas1 = model1.solve()
+    
+    betas2 = np.linalg.lstsq(np.array([np.ones(len(data[0])), data[0]]).T, np.array([data[1]]).T)[0]
+    
+    fig, ax = plt.subplots()
+    ax.scatter(data[0], data[1])
+    ax.set_xlim(min(data[0]) - 20, max(data[0]) + 20)
+    ax.set_ylim(min(data[1]) - 20, max(data[1]) + 20)
+    
+    for model, betas, col in zip(('Lmax', 'L2'), (betas1, betas2), ('orange', 'green')):    
+        print(betas)
+        beta0, beta1 = betas
+        left, right = ax.get_xlim()
+        reg = [left * beta1 + beta0, right * beta1 + beta0]
+        ax.plot([left, right], reg, label=model, c=col)
+        ax.legend()
+
+        plt.grid(True, linestyle='--', alpha=0.7)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+
+    
+    plt.title('LInf vs L2')
+    plt.savefig('models/behavior/linf_vs_l2.png')
+    
+    
 def plot_behavior():
     # all_three_random()
-    l1_with_outlier()
-    infinity_with_outlier()
-    weighted_with_outlier()
-    
+    # l1_with_outlier()
+    # infinity_with_outlier()
+    # weighted_with_outlier()
+    linf_with_l2()
     
 if __name__ == '__main__':
     plot_behavior()

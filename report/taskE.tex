@@ -53,17 +53,17 @@ Vracia:
 
 \subsection{Porovnanie použitia $L^1$ a $L^{\infty}$ lineárnej regresie}
 
-\textit{Nasledujúca tvrdenia popisujú len naše pozorovania správania sa jednotlivých lineárnych regresii na genereovaných dátach}
+\textit{Nasledujúce tvrdenia popisujú len naše pozorovania správania sa jednotlivých lineárnych regresii na generovaných dátach}
 
 Vyššie v sekcii \ref{sec:A} sme ukázali, že implementácie lineárnej regresie pomocou merania vzdialenost $L^1$ a $L^{\infty}$ normou majú optimálne riešenie, pre ľubovoľné vstupné dáta. Snažili sme sa odpozorovať, ako sa jednotlivé prístupy odlišujú pre nejaké konkrétne dáta.
 
-V dátach, v ktorých je výrazná lineárna závislosť, minimalizovanie $L^1$ normy veľmi dobre zachytáva práve tento lineárny vzťah, aj v prítomnosti pdľahlých dát - outlierov. Toto správanie vie ale viesť aj k tzv. \textit{overfittingu}. Model príliš tesne zachytáva takéto správanie, čo môže viesť k horším odhadom pre budúce pozorovania.
+V dátach, v ktorých je výrazná lineárna závislosť, minimalizovanie $L^1$ normy veľmi dobre zachytáva práve tento lineárny vzťah, aj v prítomnosti odľahlých dát - outlierov. Toto správanie vie ale viesť aj k tzv. \textit{overfittingu}. Model príliš tesne zachytáva takéto správanie, čo môže viesť k horším odhadom pre budúce pozorovania.
 
-Na druhej strane minimalizovanie $L^{\infty}$ normy je veľmi ovplyvňované outliermi. Aj pre \enquote{jasne} lineárna dáta s nejakými chybnými pozorovaniami, tieto dátové body výrazne odklonia regresnú priamku/nadrovinu. Napriek tomu takýto odklon je menej výrazný, ako napríklad pri bežne používanej minimalizácii $L^2$ normy, čo môže byť dôvod pre používanie takejto lineárnej regresie pre dáta, kde očakávame veľa outlierov.
+Na druhej strane minimalizovanie $L^{\infty}$ normy je veľmi ovplyvňované outliermi. Aj pre \enquote{jasne} lineárne dáta s nejakými chybnými pozorovaniami, tieto dátové body výrazne odklonia regresnú priamku/nadrovinu. 
 
 \subsubsection{Minimalizácia váženého súčtu}
 
-Pre využitie potenciálu oboch ($L^1$ a $L^{\infty}$) prístupov sme implementovali aj regresiu pomocou minimalizácie váženej sumy $\omega||y - \hat{y}||_1 + (1-\omega)||y - \hat{y}||_{\infty},~\omega \in [0;1]$. Formulovaná LP úloha vyzerá nasledovne (značenie sme prebrali z \eqref{P1} a \eqref{Pinf}):
+Toto správanie $L^{\infty}$ lineárnej regresie môžeme využiť na zníženie overfittingu $L^1$ lineárnej regresie. Jeden z možných prístupov môže byť napríklad pomocou minimalizácie váženej sumy $\omega||y - \hat{y}||_1 + (1-\omega)||y - \hat{y}||_{\infty},~\omega \in [0;1]$. Formulovaná LP úloha vyzerá nasledovne (značenie sme prebrali z \eqref{P1} a \eqref{Pinf}):
 
 
 \begin{align*}
@@ -191,9 +191,5 @@ Takáto lineárna regresia je implementovaná v triede \pyth|WeightedL1LInfModel
 	\end{subfigure}
 	\caption*{\centering Porovnanie správania sa jednotlivých regresii, prvé tri grafy zobrazujú rovnaké lineárne dáta s jedným outlierom}
 \end{figure}
-
-
-
-
 
 \end{document}
