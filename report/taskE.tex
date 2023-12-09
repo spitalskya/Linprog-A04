@@ -2,7 +2,7 @@
 
 \begin{document}
 
-\section{Úloha E}	
+\section{Úloha E}\label{sec:E}
 
 \subsection{Spracovanie všeobecnej triedy pre $L^1$ a $L^{\infty}$ regresiu}
 
@@ -15,8 +15,8 @@ Konštruktor triedy, spoločný pre oba modely, vytvorí inštanciu, ktorá si d
 Argumenty:
 
 \begin{itemize}
-	\item \pyth|dependent_vect: np.array| - vektor závislých premenných
-	\item \pyth|independent_vect: np.array| - matica, ktorej stĺpce sú vektory nezávislých premenných
+	\item \pyth|dependent_vect: np.ndarray| - vektor závislých premenných
+	\item \pyth|independent_vect: np.ndarray| - matica, ktorej riadky sú vektory nezávislých premenných
 \end{itemize}
 
 \subsubsection*{\pyth|Model.solve()|}
@@ -26,7 +26,7 @@ Metóda, ktorá vyrieši regresnú LP úlohu na daných dátach. \pyth|L1Model.s
 Vracia:
 
 \begin{itemize}
-	\item \pyth|np.array| - vektor optimálnych $\beta$ premenných
+	\item \pyth|np.ndarray| - vektor optimálnych $\beta$ premenných
 \end{itemize}
 
 Po zavolaní tejto metódy si inštancia uloží vektor optimálnych $\beta$ premenných do atribútu \pyth|self._beta|, potrebné pre metódy popísané nižšie.
