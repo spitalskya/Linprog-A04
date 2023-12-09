@@ -85,6 +85,8 @@ class Model:
 
         if self.space_dim == 2:
             fig, axes = plt.subplots()
+            axes.set_xlim(0, 120)
+            axes.set_ylim(0, 320)
             self._2d_plot(axes, save_loc)
             return True
 
@@ -196,20 +198,27 @@ class LInfModel(Model):
 
 
 
-class L1LInfModel(Model):
+class WeightedL1LInfModel(Model):
     """
     Data fitting model using L infinity norm.
     """
 
     def __init__(self, dependent_vect: np.ndarray, independent_vect: np.ndarray):
         super().__init__(dependent_vect, independent_vect)
-        self.model_type = 'L1 LInf norm'
+        self.model_type = 'Weighted sum of L1 and LInf'
 
     def solve(self, omega: float) -> np.ndarray:
         """
         Minimizes sum of L1 and weighted L infinity linear programming problem.
+        :param omega: weight for L1 norm, between 0 and 1
         :return: array of beta values
         """
+        # check if omega is between 0 and 1
+        if omega < 0 or omega > 1:
+            raise ValueError('omega argument should be between 0 and 1')
+        
+        self.model_type += f', omega={omega}'
+        
         # form LP
         c = np.array([0] * self.space_dim + [omega] * self.var_count + [1 - omega])
         A = np.vstack([np.array([1] * self.var_count), self.x_vect]).transpose()

@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from models import L1Model, LInfModel, L1LInfModel
+from models import L1Model, LInfModel, WeightedL1LInfModel
 from DataGenerator import DataGenerator
 
 
@@ -92,14 +92,31 @@ def plot_3d():
     print('generated 3D plots')
 
 
-def linear_with_outlier():
+def l1_with_outlier():
     # plot graph of linear data with one outlier with L1 regression line
     data = [[x for x in range(20, 100, 10)] + [100], 
             [2*y for y in range(20, 100, 10)] + [300]]
     
     model1 = L1Model(np.array(data[1]), np.array([data[0]]))
     model1.solve()
-    model1.visualize('models/behavior/linear_with_outlier.png')
+    model1.visualize('models/behavior/L1_linear_with_outlier.png')
+
+def infinity_with_outlier():
+    # plot graph of linear data with one outlier with L1 regression line
+    data = [[x for x in range(20, 100, 10)] + [100], 
+            [2*y for y in range(20, 100, 10)] + [300]]
+    
+    model1 = LInfModel(np.array(data[1]), np.array([data[0]]))
+    model1.solve()
+    model1.visualize('models/behavior/LInf_linear_with_outlier.png')
+
+def weighted_with_outlier():
+    data = [[x for x in range(20, 100, 10)] + [100], 
+        [2*y for y in range(20, 100, 10)] + [300]]
+    model1 = WeightedL1LInfModel(np.array(data[1]), np.array([data[0]]))
+    model1.solve(omega=0.3)
+    model1.visualize('models/behavior/weighted_linear_with_outlier.png')
+    
 
 def random_with_colinear():
     # plot graph of random data with some colinear data with L1 regression line
@@ -111,22 +128,45 @@ def random_with_colinear():
     model1 = LInfModel(np.array(y), np.array([x]))
     model1.solve()
     model1.visualize('models/behavior/random_with_colinear.png')
+    
+def all_three_random():
+    data = [[x for x in range(20, 100, 5)] + [100], 
+        [2*y for y in range(20, 100, 5)] + [450]]
+    
+    data = data_2d(noise=(100, 500))
+    
+    model1 = L1Model(np.array(data[1]), np.array([data[0]]))
+    betas1 = model1.solve()
+    model2 = LInfModel(np.array(data[1]), np.array([data[0]]))
+    betas2 = model2.solve()
+    model3 = WeightedL1LInfModel(np.array(data[1]), np.array([data[0]]))
+    betas3 = model3.solve(omega=0.3)
+    
+    fig, ax = plt.subplots()
+    ax.scatter(data[0], data[1])
+    ax.set_xlim(min(data[0]) - 20, max(data[0]) + 20)
+    ax.set_ylim(min(data[1]) - 20, max(data[1]) + 20)
+    
+    for model, betas, col in zip((model1, model2, model3), (betas1, betas2, betas3), ('orange', 'green', 'blue')):    
+        beta0, beta1 = betas
+        left, right = ax.get_xlim()
+        reg = [left * beta1 + beta0, right * beta1 + beta0]
+        ax.plot([left, right], reg, label=model.model_type, c=col)
+        ax.legend()
 
+        plt.grid(True, linestyle='--', alpha=0.7)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
 
-def minimizing_both_norms():
-    data = [[x for x in range(20, 100, 10)] + [100], 
-        [2*y for y in range(20, 100, 10)] + [300]]
-
-
-    for i in range(0, 11):
-        model1 = L1LInfModel(np.array(data[1]), np.array([data[0]]))
-        model1.solve(omega=i / 100 + 0.3)
-        model1.visualize(f'models/behavior/minimizing_both_linear_with_outlier{i}.png')
+    plt.title('Data fitting using all three models')
+    plt.savefig('models/behavior/all_three_random.png')
 
 def plot_behavior():
-    # linear_with_outlier()
-    # random_with_colinear()
-    minimizing_both_norms()
+    # all_three_random()
+    l1_with_outlier()
+    infinity_with_outlier()
+    weighted_with_outlier()
+    
     
 if __name__ == '__main__':
     plot_behavior()
