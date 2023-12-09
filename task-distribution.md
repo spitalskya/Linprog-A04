@@ -20,7 +20,7 @@
   - [x] okomentovať
   - [x] opraviť ohraničenia ($\beta$ reálna, $t$ kladné)
   - [x] pekné názvy premenných
-- [ ] report - slovne popísať, čo jednotlivé bety hovoria
+- [x] report - slovne popísať, čo jednotlivé bety hovoria
 
 ## D
 - [x] Robo - spočítanie R-kvadrátu
@@ -35,7 +35,6 @@
   - [x] vygenerovať pngs
 - [x] Erik - opraviť ohraničenia ($\beta$ reálna, $t$ kladné)
 - [ ] nech nezbehne `visualize`, kým nie je solved (vyriešiť cez custom `Exception`?)
-- [ ] Andrej - matematicky kedy je L1 alebo LInf lepšia (L2)
 
   
 ## Other stuff
