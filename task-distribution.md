@@ -3,8 +3,8 @@
 ## A
 - [x] Tomáš - matika
 - [x] Andrej - spísať Latex
-- [ ] Andrej - spísať optimalitu úlohy
-  - [ ] skontrolovať transpozície
+- [x] Andrej - spísať optimalitu úlohy
+  - [x] skontrolovať transpozície
   - [x] checknúť, či silná dualita je to, čo tvrdím
 
 ## B
@@ -20,12 +20,13 @@
   - [x] okomentovať
   - [x] opraviť ohraničenia ($\beta$ reálna, $t$ kladné)
   - [x] pekné názvy premenných
+- [x] report - slovne popísať, čo jednotlivé bety hovoria
 
 ## D
 - [x] Robo - spočítanie R-kvadrátu
 - [x] Robo - pridať do classy Model (Erikovej)
   - [x] spraviť všeobecný prípad
-- [ ] Andrej - prepísať to tak, aby to nevyužívalo `Model.r2()`
+- [x] Andrej - prepísať to tak, aby to nevyužívalo `Model.r2()`
 
 ## E
 - [x] Erik - spraviť peknú Classu na L1 a Linf regresiu
@@ -33,13 +34,19 @@
 - [x] Erik - demonštrácia modelu s pseudonáhodnými dátami
   - [x] vygenerovať pngs
 - [x] Erik - opraviť ohraničenia ($\beta$ reálna, $t$ kladné)
-- [ ] Andrej - matematicky kedy je L1 alebo LInf lepšia (L2)
+- [ ] nech nezbehne `visualize`, kým nie je solved (vyriešiť cez custom `Exception`?)
 
   
 ## Other stuff
 - [x] Andrej - preformulovať úlohu do tvaru pre `scipy.optimize.linprog`
 - [x] Robo - spísanie kódu do reportu
-- [ ] pridať nový kód keď bude
-- [ ] viac popísať jednotlivé časti?
+- [x] pridať nový kód keď bude
+- [x] viac popísať jednotlivé časti?
+- [ ] sformulovať simultánne minimalizovanie L1 a LInf?
+- [ ] porovanie časové na veľkých datasetoch. aj s L2
+- [ ] regularization path?
 - [ ] prezrieť ešte raz celý kód (konzistentné formátovanie, komentáre...)
-  - [ ] donútiť LaTeXový Python, aby highlightoval konzistentne (v taskB - np.array highlightne, np.matrix nie)
+- [ ] prezrieť celý report
+  - [ ] treba úvod, záver, prehľad kódu
+  - [ ] gramatika, formátovanie, či sedia rozmery...
+  - [ ] zmeniť regresiu na lineárnu regresiu
