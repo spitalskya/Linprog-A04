@@ -92,6 +92,32 @@ def plot_3d():
     print('generated 3D plots')
 
 
+def linear_with_outlier():
+    data = [[x for x in range(20, 100, 10)] + [100], 
+            [2*y for y in range(20, 100, 10)] + [300]]
+    
+    model1 = L1Model(np.array(data[1]), np.array([data[0]]))
+    model1.solve()
+    model1.visualize('models/behavior/linear_with_outlier.png')
+
+def random_with_colinear():
+    data = data_2d()
+    
+    x = list(data[0]) + [i for i in range(min(data[0]), max(data[0]), (max(data[0]) - min(data[0])) // 15)]
+    y = list(data[1]) + [2*i + min(data[1]) for i in range(min(data[0]), max(data[0]), (max(data[0]) - min(data[0])) // 15)]
+    
+    model1 = LInfModel(np.array(y), np.array([x]))
+    model1.solve()
+    model1.visualize('models/behavior/random_with_colinear.png')
+
+
+def plot_behavior():
+    # linear_with_outlier()
+    random_with_colinear()
+    
 if __name__ == '__main__':
+    plot_behavior()
+    """
     generate_complots()
     plot_3d()
+    """

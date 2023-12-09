@@ -51,17 +51,17 @@ Vracia:
 	\item \pyth|bool| - úspešnosť vizualizácie, kde \pyth|False| označuje, že nezávislých premenných je viac ako 2, čiže nie je možné vykresliť graf
 \end{itemize}
 
-\subsection{Diskusia o vhodnotosti použitia $L^1$ a $L^{\infty}$ lineárnej regresie}
-
-\textit{Nasledujúca krátka sekcia popisuje len naše pozorovania, tvrdenia nie sú nami matematicky dokázané}
-
-Vyššie v sekcii \ref{sec:A} sme ukázali, že implementácie lineárnej regresie pomocou merania vzdialenost $L^1$ a $L^{\infty}$ normou majú optimálne riešenie, pre ľubovoľné vstupné dáta. Snažili sme sa odpozorovať, ako sa jednotlivé prístupy odlišujú pre nejaké konkrétne dáta.
-
-V dátach, v ktorých je výrazná lineárna závislosť, minimalizovanie $L^1$ normy veľmi dobre zachytáva práve tento lineárny vzťah, aj v prítomnosti outlierov. Toto správanie vie ale viesť aj k tzv. \textit{overfittingu}. Model príliš tesne zachytáva takéto správanie, čo môže viesť k horším odhadom pre budúce pozorovania. Takisto potenciálna kolinearita niektorých dátových bodov môže spôsobiť, že model práve cez nich preloží regresnú priamku namiesto toho, aby zachytil všeobecný smer rozptylu dát.
-
-Na druhej strane minimalizovanie $L^{\infty}$ normy je veľmi ovplyvňované outliermi. Aj pre \enquote{jasne} lineárna dáta s jedným chybným pozorovaním, tento bod výrazne odkloní regresnú priamku. To ale zároveň spôsobuje, že pre dáta, ktoré sa dajú \enquote{pekne} uzavrieť nejakým elipsoidom, takáto regresia zahytáva práve hlavnú os tohto elipsoidu a teda smer rozptylu dát (čo môže mať súvis aj s tým, že v sekcii \ref{sec:D} nám vyšiel koeficient determinácice vyšší práve pre tento prípad).
-
-% Najznámejší spôsob počítania regresnej nadroviny je metóda najmenších štvorcov. Pri predpise $\beta = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$, zložitosť výpočtu má komplexitu $O(n^3)$, kde $n$ je počet pozorovaní (riadkov matice $\mathbf{X}$). 
+%\subsection{Diskusia o vhodnotosti použitia $L^1$ a $L^{\infty}$ lineárnej regresie}
+%
+%\textit{Nasledujúca krátka sekcia popisuje len naše pozorovania, tvrdenia nie sú nami matematicky dokázané}
+%
+%Vyššie v sekcii \ref{sec:A} sme ukázali, že implementácie lineárnej regresie pomocou merania vzdialenost $L^1$ a $L^{\infty}$ normou majú optimálne riešenie, pre ľubovoľné vstupné dáta. Snažili sme sa odpozorovať, ako sa jednotlivé prístupy odlišujú pre nejaké konkrétne dáta.
+%
+%V dátach, v ktorých je výrazná lineárna závislosť, minimalizovanie $L^1$ normy veľmi dobre zachytáva práve tento lineárny vzťah, aj v prítomnosti outlierov. Toto správanie vie ale viesť aj k tzv. \textit{overfittingu}. Model príliš tesne zachytáva takéto správanie, čo môže viesť k horším odhadom pre budúce pozorovania.
+%
+%Na druhej strane minimalizovanie $L^{\infty}$ normy je veľmi ovplyvňované outliermi. Aj pre \enquote{jasne} lineárna dáta s jedným chybným pozorovaním, tento bod výrazne odkloní regresnú priamku/nadrovinu. To ale zároveň spôsobuje, že z našich pozorovaní (na 2D a 3D dátach) takáto regresia celkom dobre koreluje so 
+%
+%% Najznámejší spôsob počítania regresnej nadroviny je metóda najmenších štvorcov. Pri predpise $\beta = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}$, zložitosť výpočtu má komplexitu $O(n^3)$, kde $n$ je počet pozorovaní (riadkov matice $\mathbf{X}$). 
 
 
 

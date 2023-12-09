@@ -43,8 +43,11 @@
 - [x] Robo - spísanie kódu do reportu
 - [x] pridať nový kód keď bude
 - [x] viac popísať jednotlivé časti?
+- [ ] sformulovať simultánne minimalizovanie L1 a LInf?
+- [ ] porovanie časové na veľkých datasetoch. aj s L2
+- [ ] regularization path?
 - [ ] prezrieť ešte raz celý kód (konzistentné formátovanie, komentáre...)
 - [ ] prezrieť celý report
+  - [ ] treba úvod, záver, prehľad kódu
   - [ ] gramatika, formátovanie, či sedia rozmery...
   - [ ] zmeniť regresiu na lineárnu regresiu
-  - [ ] donútiť LaTeXový Python, aby highlightoval konzistentne (v taskB - np.array highlightne, np.matrix nie)
