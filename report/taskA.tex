@@ -1,35 +1,7 @@
-\documentclass[12pt,oneside,a4paper,slovak]{article}           
+\documentclass[report.tex]{subfiles}
 
-\usepackage{latexsym}
-\usepackage{amsfonts}
-\usepackage{amsthm}
-\usepackage{amstext}
-\usepackage{amsmath}
-\usepackage{amscd}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{titlesec}
-\usepackage{listings}
-\usepackage{pythonhighlight}
-\usepackage[skip=0pt]{caption}
-\usepackage{geometry}
-\usepackage[final]{hyperref}
-\usepackage[T1]{fontenc}                % slovencina
-\usepackage[utf8]{inputenc}
-\usepackage[slovak]{babel}
-
-\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm, headheight=0.6cm, headsep=0.3cm, footskip=1cm}
-
-\renewcommand{\rmdefault}{phv} % Arial
-\renewcommand{\sfdefault}{phv} % Arial
-\renewcommand{\baselinestretch}{1}
-\newcommand*{\vertbar}{\rule[0ex]{0.3pt}{1.5ex}}
-\newcommand*{\horzbar}{\rule[0ex]{1.5ex}{0.3pt}}
-
-
-\begin{document}   
-
-\section*{Úloha A}
+\begin{document}
+\section{Úloha A}\label{sec:A}
 
 Máme dané vektory $y, x_1, x_2, \dots, x_k$. Chceme nájsť parametre $\beta_0, \beta_1,\dots,\beta_k$ také, aby pre vektor $\hat{y} = \beta_0 + \beta_1x_1 + \dots + \beta_kx_k$, boli normy $||y - \hat{y}||_1$ a $||y - \hat{y}||_{\infty}$ minimálne. 
 
@@ -49,13 +21,13 @@ Vyjadrime vektor $\hat{y}$ ako súčin matice a vektora $\beta = (\beta_0, \beta
 	\mathbf{A} \beta
 \end{align*}
 
-\subsection*{Minimalizovanie $L^1$ normy}
+\subsection{Minimalizovanie $L^1$ normy}
 
 Prevedieme problém zo zadania do tvaru:
 
 \begin{align*}
 	\text{min}~ &c^Tx\\
-	Ax &\geq b
+	&Ax \geq b
 \end{align*}
 
 Zaveďme si nový vektor premenných $t \in \mathbb{R}^n$, ktorým ohraničíme normu $||y - \mathbf{A} \beta||_1$.
@@ -64,7 +36,7 @@ Zaveďme si nový vektor premenných $t \in \mathbb{R}^n$, ktorým ohraničíme 
 	-t \leq y - \mathbf{A} \beta &\leq t
 \end{align*}	
 
-Pre obe ohraničenia, odseparujme premenné od konštánt a preveďme do maticového tvaru.
+Pre obe ohraničenia, odseparujme premenné od konštánt a prevedieme do maticového tvaru.
 
 \begin{align*}
 	\left(
@@ -134,7 +106,7 @@ Minimalizovanie $L^{1}$ normy ako úloha lineárneho programovania vyzerá teda 
 	&\beta \in \mathbb{R}^{k+1},~t \geq \mathbf{0}_{n} \nonumber
 \end{align}
 
-\subsubsection*{Prípustnosť a optimalita}
+\subsubsection{Prípustnosť a optimalita}\label{sec:1Optim}
 
 Dokážme, že \eqref{P1} je úloha, ktorá nadobúda optimálne riešenie pre ľubovoľné vektory $y, x_1, x_2, \dots, x_k$. Nech $|y| := (|y_1|, |y_2|, \dots, |y_n|)^T$ pre $y = (y_1, y_2, \dots, y_n)^T$. Ukážme prípustnosť zvolením $\beta = \mathbf{0}_{k+1}$ a $t = |y|$:
 
@@ -225,9 +197,9 @@ Optimalitu ukážeme zo silnej duality. Sformulujme duálnu úlohu pre duálne p
 
 Vidíme, že táto úloha je prípustná pre $\alpha_1 = \alpha_2 = \mathbf{0}_n$. Z prípustnosti primárnej a duálnej úlohy teda vyplýva, že úloha \eqref{P1} nadobúda optimálne riešenie pre ľubovoľnú voľbu počiatočných vektorov.
 
-\subsection*{Minimalizovanie $L^{\infty}$ normy}
+\subsection{Minimalizovanie $L^{\infty}$ normy}
 
-Budeme používať podobné značenie ako pri formulácii $L^1$ normy. Zaveďme si skalár $\gamma \in \mathbb{R}$, ktorým ohraničíme normu $||y - \mathbf{A} \beta||_{\infty}$.
+Budeme používať rovnaké značenie pre predikovaný vektor hodnôt $\hat{y} = \mathbf{A}\beta$ ako pri formulácii $L^1$ normy. Zaveďme si skalár $\gamma \in \mathbb{R}$, ktorým ohraničíme normu $||y - \mathbf{A} \beta||_{\infty}$.
 
 \begin{align*}
 	-\gamma \mathbf{1}_n \leq y - \mathbf{A} \beta &\leq \gamma \mathbf{1}_n
@@ -261,6 +233,7 @@ Pre jednotlivé ohraničenia odseparujeme premenné od konštánt a zapíšeme v
 		\end{array}
 	\right) &\geq -y \\
 \end{align*}
+
 
 Minimalizovanie $L^{\infty}$ normy ako úloha lineárneho programovania vyzerá teda nasledovne.
 
@@ -303,11 +276,11 @@ Minimalizovanie $L^{\infty}$ normy ako úloha lineárneho programovania vyzerá 
 	&\beta \in \mathbb{R}^{k+1},~\gamma \geq 0 \nonumber
 \end{align}
 
-\subsubsection*{Prípustnosť a optimalita}
+\newpage
+
+\subsubsection{Prípustnosť a optimalita}\label{sec:InfOptim}
 
 Podobný spôsobom ako vyššie ukážeme optimalitu \eqref{Pinf}. Nech $\beta = \mathbf{0}_{k+1}$ a $\gamma = |\tilde{y}|$, kde $|\tilde{y}| := |\max(y_1, y_2, \dots, y_n)|$ pre $y = (y_1, y_2, \dots, y_n)^T$:
-
-\newpage
 
 \begin{align*}
 	\left(

@@ -1,7 +1,6 @@
 import numpy as np
 from scipy.optimize import linprog
 import pandas as pd
-
 #importing data and creating dataframes
 data = pd.read_csv('data\A04wine.csv')
 

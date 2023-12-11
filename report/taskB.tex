@@ -1,87 +1,164 @@
-\documentclass[12pt,oneside,a4paper,slovak]{article}           
-
-\usepackage{latexsym}
-\usepackage{amsfonts}
-\usepackage{amsthm}
-\usepackage{amstext}
-\usepackage{amsmath}
-\usepackage{amscd}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{titlesec}
-\usepackage{listings}
-\usepackage{pythonhighlight}
-\usepackage[skip=0pt]{caption}
-\usepackage{geometry}
-\usepackage[final]{hyperref}
-\usepackage[T1]{fontenc}                % slovencina
-\usepackage[utf8]{inputenc}
-\usepackage[slovak]{babel}
-
-\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm, headheight=0.6cm, headsep=0.3cm, footskip=1cm}
-
-\renewcommand{\rmdefault}{phv} % Arial
-\renewcommand{\sfdefault}{phv} % Arial
-\renewcommand{\baselinestretch}{1}
-\newcommand*{\vertbar}{\rule[0ex]{0.3pt}{1.5ex}}
-\newcommand*{\horzbar}{\rule[0ex]{1.5ex}{0.3pt}}
-
+\documentclass[report.tex]{subfiles}
 
 \begin{document}   
 
-\section*{Úloha B}
-Naimportovali sme knižnice; \pyth|numpy| na tvorenie matíc a vektorov, \pyth|scipy.optimize| na riešenie danej LP úlohy a \pyth|matplotlib| na vykresľovanie grafov.
-\begin{python}
-import numpy as np
-from scipy.optimize import linprog
-import pandas as pd
-import matplotlib.pyplot as plt
-\end{python}
-Načítali dáta a rozdelili ich do premenných.
-\begin{python}
-data = np.load('data/A04plotregres.npz')
-x = data['x']
-y = data['y']
-\end{python}
-Začali sme s $L^1$ $(Manhattan)$ normou
-\begin{python}
-# l1 norm
-c = np.array([0,0] + [1] * len(x))
-A = np.matrix([[1] * len(x), x]).transpose()
-I = np.identity(len(x))
-A_ub = np.block([[-A,-I], [A,-I]])
-b_ub = np.concatenate([-y, y])
-solve = linprog(c, A_ub, b_ub)
-beta0 = solve.x[0]
-beta1 = solve.x[1]
-values = [i*beta1 + beta0 for i in x]
-\end{python}
-\begin{python}
-fig, ax = plt.subplots()
-ax.plot(x, values, label = 'Manhattan')
-ax.set_xlim([0, max(x) + 5])
-ax.set_ylim([0, max(y) + 5]) 
-\end{python}
-Potom sme spočítali $L^\infty$ $(maximum)$ normu, a nasledovne ju tiež vykreslili do grafu.
-\begin{python}
-# l inf norm
-c_inf = np.array([0,0,1])
-A_inf = np.matrix([[1] * len(x), x]).transpose()
-i_inf = np.array([[1] * len(x)]).transpose()
-A_ub_inf = np.block([[-A_inf, -i_inf], [A_inf, -i_inf]])
-b_ub_inf = np.concatenate([-y, y])
-solve_inf = linprog(c_inf, A_ub_inf, b_ub_inf)
-beta0_inf = solve_inf.x[0]
-beta1_inf = solve_inf.x[1]
-values_inf = [i * beta1_inf + beta0_inf for i in x]
-\end{python}
-\begin{python}
-ax.plot(x, values_inf, label = 'infinity')
-ax.plot(x,y, 'o')
-ax.legend()
-plt.show()
-\end{python}
+\section{Úloha B}\label{sec:B}
 
 
+\subsection{Prevedenie úlohy LP do tvaru pre \pyth|scipy.optimize.linprog|}
+
+Metóda \pyth|linprog| z modulu \pyth|scipy.optimize| vyžaduje nasledujúci tvar úlohy LP:
+
+\begin{align*}
+	\text{min}~ &c^Tx\\
+	&A_{ub}x \leq b_{ub} \\
+	&A_{eq}x \leq b_{eq} \\
+	&l \leq x \leq u & l,u \in (\mathbb{R}\cup \{\text{\pyth|None|\}})^n 
+\end{align*}
+
+Hodnota \pyth|None| vo vektoroch $l,~u$ značí neohraničenosť v danom smere. Upravme teda úlohy vyjadrené vyššie do predpísaného tvaru.
+
+Pre $L^1$ regresiu:
+
+\begin{align*}
+	\text{min}~ &
+	\left(
+	\begin{array}{c|c}
+		\mathbf{0}_{k+1}^T & \mathbf{1}_n^T
+	\end{array}
+	\right)
+	\left(
+	\begin{array}{c}
+		\beta \\
+		\hline
+		t
+	\end{array}
+	\right) \\
+	&\left(
+	\begin{array}{c|c}
+		-\mathbf{A} & -\mathbb{I}_n \\
+		\hline
+		\mathbf{A} & -\mathbb{I}_n
+	\end{array}
+	\right)
+	\left(
+	\begin{array}{c}
+		\beta \\
+		\hline
+		t
+	\end{array}
+	\right)
+	\leq
+	\left(
+	\begin{array}{c}
+		-y \\
+		\hline
+		y
+	\end{array}
+	\right) \\
+	&\text{\pyth|None|} \leq \beta_i \leq \text{\pyth|None|} &i = 0,1,\dots,k\\
+	&0 \leq t_j \leq \text{\pyth|None|} &j = 1,\dots,n
+\end{align*}
+
+Pre $L^{\infty}$ regresiu:
+
+\begin{align*}
+	\text{min}~ &
+	\left(
+	\begin{array}{c|c}
+		\mathbf{0}_{k+1}^T & 1
+	\end{array}
+	\right)
+	\left(
+	\begin{array}{c}
+		\beta \\
+		\hline
+		\gamma
+	\end{array}
+	\right) \\
+	&\left(
+	\begin{array}{c|c}
+		-\mathbf{A} & -\mathbf{1}_n \\
+		\hline
+		\mathbf{A} & -\mathbf{1}_n
+	\end{array}
+	\right)
+	\left(
+	\begin{array}{c}
+		\beta \\
+		\hline
+		\gamma
+	\end{array}
+	\right)
+	\leq
+	\left(
+	\begin{array}{c}
+		-y \\
+		\hline
+		y
+	\end{array}
+	\right) \\
+	&\text{\pyth|None|} \leq \beta_i \leq \text{\pyth|None|} &i = 0,1,\dots,k\\
+	&0 \leq \gamma \leq \text{\pyth|None|}
+\end{align*}
+
+Úlohy v zdrojovom kóde sú implementované práve v tomto tvare.
+
+\subsection{Implementovanie regresných LP úloh}
+
+Na implementáciu formulovaných LP úloh využívame tri knižnice:
+
+\begin{itemize}
+	\item \pyth|numpy| - tvorenie matíc a vektorov, načítanie dát
+	\item \pyth|scipy.optimize| - implementovaný LP solver
+	\item \pyth|matplotlib.pyplot| na vykresľovanie grafov.
+\end{itemize}
+
+Dáta relevantné pre túto úlohu sú uložené v súbore \verb|data/A04plotregres.npz|. Jedná sa o 16 bodov v $\mathbb{R}^2$, kde prvá súradnica reprezentuje nezávislú premennú (vektor týchto súradníc označíme \pyth|x|) a druhá závislú premennú (označíme \pyth|y|). 
+
+\newpage
+
+Vytvorme si potrebné štruktúry pre využitie metódy \pyth|scipy.optimize.linprog| pre LP formuláciu s $L^1$ normou:
+
+\begin{python}
+c = np.array([0,0] + [1] * len(x)) #objective function vector, two zeros stand for betas
+A = np.matrix([[1] * len(x), x]).transpose()  
+I = np.identity(len(x)) # Identity matrix
+
+A_ub = np.block([[-A,-I], [A,-I]]) #creating a block matrix 
+b_ub = np.concatenate([-y, y]) #right side vector
+bounds = [(None, None), (None, None)] + [(0, None) for _ in range(len(x))] # bounds for variables
+\end{python}
+
+Pomocou solvera získame vektor optimálnych $\beta$ koeficientov:
+
+\begin{equation*}
+	\beta_0^{(1)} \approx -9.8378,~\beta_1^{(1)} \approx 2.1297
+\end{equation*}
+
+Podobne implementujeme $L^{\infty}$ formuláciu:
+
+\begin{python}
+c_inf = np.array([0,0,1]) #objective function vector
+A_inf = np.matrix([[1] * len(x), x]).transpose() 
+i_inf = np.array([[1] * len(x)]).transpose() # vector of ones
+
+A_ub_inf = np.block([[-A_inf, -i_inf], [A_inf, -i_inf]]) # creating a block matrix
+b_ub_inf = np.concatenate([-y, y])#right side vector
+bounds = [(None, None), (None, None), (0, None)]
+\end{python}
+
+Znovu, pomocou solvera získame vektor optimálnych $\beta$ koeficientov:
+
+\begin{equation*}
+	\beta_0^{(\infty)} \approx 15.4545,~\beta_1^{(\infty)} \approx 1.7045
+\end{equation*}
+
+Pomocou získaných $\beta$ koeficientov vykreslíme regresné priamky spolu s pôvodnými dátami.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.65]{figs/task_b_plot.png}
+\end{figure}
 
 \end{document}

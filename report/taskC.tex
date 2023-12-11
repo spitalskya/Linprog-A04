@@ -1,76 +1,95 @@
-\documentclass[12pt,oneside,a4paper,slovak]{article}           
-
-\usepackage{latexsym}
-\usepackage{amsfonts}
-\usepackage{amsthm}
-\usepackage{amstext}
-\usepackage{amsmath}
-\usepackage{amscd}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{titlesec}
-\usepackage{listings}
-\usepackage{pythonhighlight}
-\usepackage[skip=0pt]{caption}
-\usepackage{geometry}
-\usepackage[final]{hyperref}
-\usepackage[T1]{fontenc}                % slovencina
-\usepackage[utf8]{inputenc}
-\usepackage[slovak]{babel}
-
-\geometry{top=2cm, bottom=2cm, left=2.5cm, right=2.5cm, headheight=0.6cm, headsep=0.3cm, footskip=1cm}
-
-\renewcommand{\rmdefault}{phv} % Arial
-\renewcommand{\sfdefault}{phv} % Arial
-\renewcommand{\baselinestretch}{1}
-\newcommand*{\vertbar}{\rule[0ex]{0.3pt}{1.5ex}}
-\newcommand*{\horzbar}{\rule[0ex]{1.5ex}{0.3pt}}
-
+\documentclass[report.tex]{subfiles}
 
 \begin{document}   
 
-\section*{Úloha C}
-Načítali sme dáta a uložili do premenných $y$ - (závislá premenná price), $x$ - (všetky premenné od ktorých cena závisí)
+\section{Úloha C}\label{sec:C}
+V tejto úlohe sa snažíme predikovať kvalitu vína, inšpirovaní prístupom Orleya Ashenfeltera k predikcii cien vína z Bordeaux.
+
+Využívame dáta zo súboru \verb|A04wine.csv| a aplikujeme modely $L^1$ a $L^{\infty}$ z úlohy A. Budeme využívať podobný postup ako v úlohe B. Na implementáciu formulovaných LP úloh využívame opäť:
+\begin{itemize}
+	\item \pyth|pandas| - načítanie dát z \verb|csv| súboru
+	\item \pyth|numpy| - tvorenie matíc a vektorov
+	\item \pyth|scipy.optimize| - implementovaný LP solver
+\end{itemize}
+
+Vyberieme z dát dané nezávislé premenné \pyth|x| a závislú premennú \pyth|y|:
+
 \begin{python}
-data = pd.read_csv('data\A04wine.csv')
 y = data['Price']
 x = data[['WinterRain','AGST', 'HarvestRain', 'Age', 'FrancePop']]
-numberOfVariablesBeta = x.shape[1]+1
 \end{python}
+
+Z počtu nezávislých premenných získame rozmer vektora $\beta$ (+1 kvôli konštantnému členu):
+
 \begin{python}
-#l1 norm
-c = np.array([0]*numberOfVariablesBeta + [1] * len(x.values))
-ALeft = np.matrix([ [1] * len(x.values)]).transpose()
-ARigth = np.matrix(x.values)
-A = np.block([ALeft, ARigth])
-I = np.identity(len(x.values))   
+numberOfVariablesBeta = x.shape[1] + 1
 \end{python}
+
+Vytvoríme potrebné štruktúry pre zostavenie modelu normy $L^1$:
+
+\begin{python}
+c = np.array([0]*numberOfVariablesBeta + [1] * len(x.values)) # Objective function coefficients
+
+ALeft = np.matrix([ [1] * len(x.values)]).transpose() # Coefficients for beta0
+ARigth = np.matrix(x.values) # Coefficients for other independent variables beta
+A = np.block([ALeft, ARigth]) # Concenate coefficients of variables into one matrix
+
+I = np.identity(len(x.values)) # Identity matrix for intercept term
+\end{python}
+
+Naformulujeme problém a vyriešime pomocou \pyth|scipy.optimize.linprog|
 
 \begin{python}
 A_ub = np.block([[-A, -I], [A, -I]])
 b_ub = np.concatenate([-y, y])
-solve = linprog(c, A_ub, b_ub)
+
+solve = linprog(c, A_ub, b_ub, bounds = [(None,None)]*numberOfVariablesBeta +[(0, None)])
 \end{python}
-Vypočítali sme $\beta$ koeficienty
+
+Po vyriešení vyberieme z riešenia koeficienty:
+
 \begin{python}
-bethas = solve.x[:numberOfVariablesBeta]
-print(bethas)
+betas = solve.x[:numberOfVariablesBeta]
 \end{python}
-A to isté pre $L^\infty$.
+
+Čo nám dá: 
+
+\begin{gather*}
+	\beta_0^{(1)} \approx -8.8801 \cdot 10^{-1} ,~\beta_1^{(1)} \approx 1.5793\cdot 10^{-3},~\beta_2^{(1)} \approx 5.2130\cdot 10^{-1} \\
+	\beta_3^{(1)} \approx -4.5137\cdot 10^{-3} ,~\beta_4^{(1)} \approx 1.1300\cdot 10^{-2}  ,~\beta_5^{(1)} \approx -2.2111\cdot 10^{-5}
+\end{gather*}
+
+Z týchto výsledkov môžeme usúdiť, že najviac pozitívne vplýva na cenu vína metrika \textit{AGST - Average growing season temperature} a najsignifikantnejší negatívny vplyv má \textit{dážď počas zberu}.
+
+
+\newpage
+
+Ďalej zostrojíme relevantné štruktúry a naformulujeme LP pre $L^{\infty}$ normu:
+
 \begin{python}
-#l inf norm
-c_inf = np.array([0]*numberOfVariablesBeta + [1])
-A_inf = np.block([ALeft, ARigth])
-i_inf = np.array([ [1] * len(x.values)]).transpose()
+c_inf = np.array([0]*numberOfVariablesBeta + [1]) # Koeficienty cielovej funkcie
+A_inf = np.block([ALeft, ARigth]) # Koeficienty pre nezavisle premenne pre l_inf normu
+i_inf = np.array([ [1] * len(x.values)]).transpose() # Koeficienty pre intercept term pre l_inf normu
 
 A_ub_inf = np.block([[-A_inf,-i_inf],[A_inf,-i_inf]])
-b_ub_inf = np.concatenate([-y, y])
-solve_inf = linprog(c_inf, A_ub_inf, b_ub_inf)
-
-bethas_inf = solve_inf.x[:numberOfVariablesBeta]
-print(bethas_inf)
+b_ub_inf = np.concatenate([-y, y]) 
 \end{python}
 
+Vyriešime aj tento problém pomocou \pyth|scipy.optimize.linprog()| pre $L^{\infty}$ normu a vyberieme $\beta$ koeficienty:
+
+\begin{python}
+solve_inf = linprog(c_inf, A_ub_inf, b_ub_inf, bounds=[(None,None)]*numberOfVariablesBeta+[(0,None)])
+betas_inf = solve_inf.x[:numberOfVariablesBeta]
+\end{python}
+
+Po čom dostaneme:
+
+\begin{gather*}
+	\beta_0^{(\infty)} \approx  3.4841 ,~\beta_1^{(\infty)} \approx 8.3399\cdot 10^{-4} ,~\beta_2^{(\infty)} \approx 6.0027\cdot 10^{-1} \\
+	\beta_3^{(\infty)} \approx -3.3416\cdot 10^{-3} ,~\beta_4^{(\infty)} \approx -2.3036\cdot 10^{-2}  ,~\beta_5^{(\infty)} \approx -1.1958\cdot 10^{-4}
+\end{gather*}
+
+Vidíme, že aj regresia pomocou $L^{\infty}$ normy odhaduje najväčší pozitívny vplyv meetriky \textit{AGST} a najväčší negatívny vplyv \textit{dažďu počas zberu}. Zmenil sa však vplyv premennej \textit{vek} (oproti prechádzajúcemu modelu) z pozitívneho na negatívny.
 
 
 \end{document}
