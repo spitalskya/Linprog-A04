@@ -1,9 +1,9 @@
 \documentclass[report.tex]{subfiles}
 
 \begin{document}
-\section{Úloha A}\label{sec:A}
+\section{Formulácia úloh lineárneho programovania}\label{sec:A}
 
-Máme dané vektory $y, x_1, x_2, \dots, x_k$. Chceme nájsť parametre $\beta_0, \beta_1,\dots,\beta_k$ také, aby pre vektor $\hat{y} = \beta_0 + \beta_1x_1 + \dots + \beta_kx_k$, boli normy $||y - \hat{y}||_1$ a $||y - \hat{y}||_{\infty}$ minimálne. 
+Máme dané vektory $y, x_1, x_2, \dots, x_k$. Chceme nájsť parametre $\beta_0, \beta_1,\dots,\beta_k$ také, ktoré pre vektor $\hat{y} = \beta_0 + \beta_1x_1 + \dots + \beta_kx_k$ minimalizujú normu $||y - \hat{y}||_1$, resp. normu $||y - \hat{y}||_{\infty}$. 
 
 Vyjadrime vektor $\hat{y}$ ako súčin matice a vektora $\beta = (\beta_0, \beta_1, \dots, \beta_k)^T$.
 
@@ -30,7 +30,7 @@ Prevedieme problém zo zadania do tvaru:
 	&Ax \geq b
 \end{align*}
 
-Zaveďme si nový vektor premenných $t \in \mathbb{R}^n$, ktorým ohraničíme normu $||y - \mathbf{A} \beta||_1$.
+Zaveďme si nový vektor premenných $t \in \mathbb{R}^n$, ktorým ohraničíme vektor $y - \mathbf{A} \beta$. Úloha sa teda z minimalizovania normy $||y - \mathbf{A} \beta||_1$ prevedie na minimalizáciu $\mathbf{1}_n^Tt$.
 
 \begin{align*}
 	-t \leq y - \mathbf{A} \beta &\leq t
@@ -148,7 +148,7 @@ Dokážme, že \eqref{P1} je úloha, ktorá nadobúda optimálne riešenie pre �
 
 Vidíme, že obe ohraničenia platia, čiže $\left(\mathbf{0}_{k+1}^T, |y|^T \right)^T$ je prípustné riešenie.
 
-Optimalitu ukážeme zo silnej duality. Sformulujme duálnu úlohu pre duálne premenné $\alpha_1, \alpha_2 \in \mathbb{R}^{n}$:
+Optimalitu ukážeme zo slabej duality. Sformulujme duálnu úlohu pre duálne premenné $\alpha_1, \alpha_2 \in \mathbb{R}^{n}$:
 
 \begin{align*}
 	\text{max}~ &
@@ -199,7 +199,7 @@ Vidíme, že táto úloha je prípustná pre $\alpha_1 = \alpha_2 = \mathbf{0}_n
 
 \subsection{Minimalizovanie $L^{\infty}$ normy}
 
-Budeme používať rovnaké značenie pre predikovaný vektor hodnôt $\hat{y} = \mathbf{A}\beta$ ako pri formulácii $L^1$ normy. Zaveďme si skalár $\gamma \in \mathbb{R}$, ktorým ohraničíme normu $||y - \mathbf{A} \beta||_{\infty}$.
+Budeme používať rovnaké značenie pre predikovaný vektor hodnôt $\hat{y} = \mathbf{A}\beta$ ako pri formulácii $L^1$ normy. Zaveďme si skalárnu premennú $\gamma \in \mathbb{R}$, vektorom $\gamma\mathbf{1}_n$ ohraničíme vektor $y - \mathbf{A} \beta$. Úloha sa z minimalizácie $||y - \mathbf{A} \beta||_{\infty}$ prevedie na minimalizáciu $\gamma$.
 
 \begin{align*}
 	-\gamma \mathbf{1}_n \leq y - \mathbf{A} \beta &\leq \gamma \mathbf{1}_n
@@ -363,6 +363,6 @@ Obe ohraničenia platia, čiže $(\mathbf{0}_{k+1}^T, |\tilde{y}|)^T$ je prípus
 	&\alpha_1, \alpha_2 \geq \mathbf{0}_{n} 
 \end{align*}
 
-Rovnako vidíme, že táto úloha je prípustná pre $\alpha_1 = \alpha_2 = \mathbf{0}_n$. Teda, zo silnej duality, úloha \eqref{Pinf} nadobúda optimálne riešenie pre ľubovoľnú voľbu počiatočných vektorov.
+Rovnako vidíme, že táto úloha je prípustná pre $\alpha_1 = \alpha_2 = \mathbf{0}_n$. Teda, zo slabej duality, úloha \eqref{Pinf} nadobúda optimálne riešenie pre ľubovoľnú voľbu počiatočných vektorov.
 
 \end{document}
