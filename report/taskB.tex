@@ -2,7 +2,7 @@
 
 \begin{document}   
 
-\section{Úloha B}\label{sec:B}
+\section{Implementácia a grafické znázornenie}\label{sec:B}
 
 
 \subsection{Prevedenie úlohy LP do tvaru pre \pyth|scipy.optimize.linprog|}
@@ -12,13 +12,13 @@ Metóda \pyth|linprog| z modulu \pyth|scipy.optimize| vyžaduje nasledujúci tva
 \begin{align*}
 	\text{min}~ &c^Tx\\
 	&A_{ub}x \leq b_{ub} \\
-	&A_{eq}x \leq b_{eq} \\
-	&l \leq x \leq u & l,u \in (\mathbb{R}\cup \{\text{\pyth|None|\}})^n 
+	&A_{eq}x = b_{eq} \\
+	&x \in [l, u] & l \leq u;~l,u \in (\mathbb{R}\cup \{-\infty, \infty\})^n 
 \end{align*}
 
-Hodnota \pyth|None| vo vektoroch $l,~u$ značí neohraničenosť v danom smere. Upravme teda úlohy vyjadrené vyššie do predpísaného tvaru.
+Hodnotami $-\infty$ a $\infty$ značíme neohraničenosť v danom smere, v zdrojovom kóde sa obe nahrádzajú hodnotou \pyth|None|. Upravme teda úlohy vyjadrené vyššie do predpísaného tvaru.
 
-Pre $L^1$ regresiu:
+Pre $L^1$ lineárnu regresiu:
 
 \begin{align*}
 	\text{min}~ &
@@ -56,8 +56,8 @@ Pre $L^1$ regresiu:
 		y
 	\end{array}
 	\right) \\
-	&\text{\pyth|None|} \leq \beta_i \leq \text{\pyth|None|} &i = 0,1,\dots,k\\
-	&0 \leq t_j \leq \text{\pyth|None|} &j = 1,\dots,n
+	&\beta_i \in (-\infty, \infty) &i = 0,1,\dots,k\\
+	&t_j \in [0, \infty) &j = 1,\dots,n
 \end{align*}
 
 Pre $L^{\infty}$ regresiu:
@@ -98,8 +98,8 @@ Pre $L^{\infty}$ regresiu:
 		y
 	\end{array}
 	\right) \\
-	&\text{\pyth|None|} \leq \beta_i \leq \text{\pyth|None|} &i = 0,1,\dots,k\\
-	&0 \leq \gamma \leq \text{\pyth|None|}
+	&\beta_i \in (-\infty, \infty) &i = 0,1,\dots,k\\
+	&\gamma \in [0, \infty)
 \end{align*}
 
 Úlohy v zdrojovom kóde sú implementované práve v tomto tvare.
