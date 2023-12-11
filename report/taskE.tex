@@ -2,11 +2,11 @@
 
 \begin{document}
 
-\section{Úloha E}\label{sec:E}
+\section{Nadstavba}\label{sec:E}
 
-\subsection{Spracovanie všeobecnej triedy pre $L^1$ a $L^{\infty}$ regresiu}
+\subsection{Spracovanie všeobecnej triedy pre $L^1$ a $L^{\infty}$ lineárnu regresiu}
 
-Vypracovali sme modul \pyth|Model| pre počítanie $L^1$ a $L^{\infty}$ regresie z ľubovoľných číselných dát, ktorý využíva LP formulácie popísané vyššie. Konkrétne \pyth|L1Model| využíva formuláciu na minimalizovanie $L^1$ normy a \pyth|LInfModel| minimalizuje $L^{\infty}$ normu. Príklad použitia tohto modelu sa nachádza v \verb|model_demonstration.ipynb| Následne opíšeme jednotlivé metódy jednotlivých modelov.
+Vypracovali sme modul \pyth|Model| pre počítanie $L^1$ a $L^{\infty}$ lineárnej regresie z ľubovoľných číselných dát, ktorý využíva LP formulácie popísané vyššie. Konkrétne \pyth|L1Model| využíva formuláciu na minimalizovanie $L^1$ normy a \pyth|LInfModel| minimalizuje $L^{\infty}$ normu. Príklad použitia tohto modelu sa nachádza v \verb|model_demonstration.ipynb| Následne opíšeme jednotlivé metódy jednotlivých modelov.
 
 \subsubsection*{\pyth|Model.__init__(dependent_vect, independent_vect)|}
 
@@ -21,7 +21,7 @@ Argumenty:
 
 \subsubsection*{\pyth|Model.solve()|}
 
-Metóda, ktorá vyrieši regresnú LP úlohu na daných dátach. \pyth|L1Model.solve()| rieši minimalizáciou $L^1$ normy a \pyth|LInfModel.solve()|, rieši minimalizáciou $L^{\infty}$ normy. 
+Metóda, ktorá vyrieši lineárnu regresnú LP úlohu na daných dátach. \pyth|L1Model.solve()| rieši minimalizáciou $L^1$ normy a \pyth|LInfModel.solve()|, rieši minimalizáciou $L^{\infty}$ normy. 
 
 Vracia:
 
@@ -189,7 +189,7 @@ Takáto lineárna regresia je implementovaná v triede \pyth|WeightedL1LInfModel
 	\begin{subfigure}[b]{0.48\linewidth}
 		\includegraphics[width=\linewidth]{figs/all_three_random.png}
 	\end{subfigure}
-	\caption*{\centering Porovnanie správania sa jednotlivých regresii, prvé tri grafy zobrazujú rovnaké lineárne dáta s jedným outlierom}
+	\caption*{\centering Porovnanie správania sa jednotlivých lineárnych regresii, prvé tri grafy zobrazujú rovnaké lineárne dáta s jedným outlierom}
 \end{figure}
 
 \end{document}

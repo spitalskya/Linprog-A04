@@ -3,8 +3,8 @@
 
 \begin{document}   
 
-\section{Úloha D}\label{sec:D}
-Vytvorme funkciu \pyth|r_squared(x, y, beta)| - kde \pyth|x| je matica vektorov nezávislých premenných, \pyth|y| je vektor závislej premennej, \pyth|beta| je vektor optimálnych $\beta$ koeficientov získaných regresiou - ktorá bude počítať $R^2$ koeficient podľa definície:
+\section{Počítanie $R^2$}\label{sec:D}
+Vytvorme funkciu \pyth|r_squared(x, y, beta)| - kde \pyth|x| je matica vektorov nezávislých premenných, \pyth|y| je vektor závislej premennej, \pyth|beta| je vektor optimálnych $\beta$ koeficientov získaných lineárnou regresiou - ktorá bude počítať $R^2$ koeficient podľa definície:
 
 \begin{align*}
 	&R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2} &\hat{y} = \beta_0 + \beta_1x_1 + \dots + \beta_kx_k,~\bar{y} = \frac{1}{n} \sum_{i=1}^ny_i
@@ -54,6 +54,6 @@ Vypočítané príslušné R-kvadráty teda sú:
 	R^{2}_{(\infty)} &\approx 0.80649
 \end{align*}
 
-Z toho môžeme usúdiť, že náš model sa dá považovať za relatívne vhodný pre tieto dáta. Tiež vidíme, že regresia pomocou Chebyshevovej normy lepšie zachytáva rozptyl dát.
+Z toho môžeme usúdiť, že náš model sa dá považovať za relatívne vhodný pre tieto dáta. Tiež vidíme, že lineárna regresia pomocou Chebyshevovej normy lepšie zachytáva rozptyl dát.
 
 \end{document}
