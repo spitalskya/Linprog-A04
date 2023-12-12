@@ -40,16 +40,15 @@ betas_inf = solve_inf.x[:numberOfVariablesBeta]
 
 def r_squared(x: np.ndarray, y: np.ndarray, beta: np.ndarray) -> float:
     # calculate y-hat and mean of y vector
-    y_hat = beta[0] + np.dot(x, beta[1:])
+    y_hat = beta[0] + x @ beta[1:]
     y_mean = np.mean(y)
 
     res1 = 0    # partial result for the numerator in the formula
     res2 = 0    # partial result for the denominator in the formula
 
     # calculate the sums
-    for i in range(len(y)):
-        res1 += (y[i] - y_hat[i]) ** 2
-        res2 += (y[i] - y_mean) ** 2
+    res1 = np.sum((y - y_hat)**2)
+    res2 = np.sum((y - y_mean)**2)
 
     # calculate the R^2 coefficient
     result = 1 - (res1 / res2)
