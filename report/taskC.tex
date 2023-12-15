@@ -19,20 +19,12 @@ y = data['Price']
 x = data[['WinterRain','AGST', 'HarvestRain', 'Age', 'FrancePop']]
 \end{python}
 
-Z počtu nezávislých premenných získame rozmer vektora $\beta$ (+1 kvôli konštantnému členu):
-
-\begin{python}
-k = x.shape[1]
-\end{python}
-
 Vytvoríme potrebné štruktúry pre zostavenie modelu normy $L^1$:
 
 \begin{python}
-c = np.array([0]*(k+1) + [1] * len(x.values)) # Objective function coefficients
+c = np.array([0]*(k + 1) + [1] * len(x.values)) # Objective function coefficients
 
-A = np.block([np.ones((len(x.values),1)), np.array(x.values)]) # Concatenate coefficients of variables into one matrix
-
-I = np.identity(len(x.values)) # Identity matrix for values of vector t
+A = np.block([np.ones((len(x.values), 1)), np.array(x.values)]) # Concatenate coefficients of variables into one matrix
 \end{python}
 
 Naformulujeme problém a vyriešime pomocou \pyth|scipy.optimize.linprog|
@@ -41,16 +33,10 @@ Naformulujeme problém a vyriešime pomocou \pyth|scipy.optimize.linprog|
 A_ub = np.block([[-A, -I], [A, -I]])
 b_ub = np.concatenate([-y, y])
 
-solve = linprog(c, A_ub, b_ub, bounds = [(None,None)]*(k+1) +[(0, None)] * len(x.values))
+solve = linprog(c, A_ub, b_ub, bounds = [(None, None)]*(k + 1) + [(0, None)] * len(x.values))
 \end{python}
 
-Po vyriešení vyberieme z riešenia koeficienty:
-
-\begin{python}
-betas = solve.x[:k+1]
-\end{python}
-
-Čo nám dá: 
+Po vyriešení vyberieme z riešenia koeficienty, čo nám dá: 
 
 \begin{gather*}
 	\beta_0^{(1)} \approx -8.8801 \cdot 10^{-1} ,~\beta_1^{(1)} \approx 1.5793\cdot 10^{-3},~\beta_2^{(1)} \approx 5.2130\cdot 10^{-1} \\
@@ -59,8 +45,6 @@ betas = solve.x[:k+1]
 
 Z týchto výsledkov môžeme usúdiť, že najviac pozitívne vplýva na cenu vína metrika \textit{AGST - Average growing season temperature} a najsignifikantnejší negatívny vplyv má \textit{dážď počas zberu}.
 
-
-\newpage
 
 Ďalej zostrojíme relevantné štruktúry a naformulujeme LP pre $L^{\infty}$ normu:
 
@@ -75,14 +59,13 @@ A_ub_inf = np.block([[-A_inf,-i_inf],[A_inf,-i_inf]])
 b_ub_inf = np.concatenate([-y, y]) 
 \end{python}
 
+\newpage
+
 Vyriešime aj tento problém pomocou \pyth|scipy.optimize.linprog()| pre $L^{\infty}$ normu a vyberieme $\beta$ koeficienty:
 
 \begin{python}
-solve_inf = linprog(c_inf, A_ub_inf, b_ub_inf, bounds=[(None,None)]*(k+1)+[(0,None)])
-betas_inf = solve_inf.x[:k+1]
+solve_inf = linprog(c_inf, A_ub_inf, b_ub_inf, bounds=[(None, None)]*(k + 1) + [(0, None)])
 \end{python}
-
-Po čom dostaneme:
 
 \begin{gather*}
 	\beta_0^{(\infty)} \approx  3.4841 ,~\beta_1^{(\infty)} \approx 8.3399\cdot 10^{-4} ,~\beta_2^{(\infty)} \approx 6.0027\cdot 10^{-1} \\

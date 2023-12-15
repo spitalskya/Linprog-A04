@@ -50,7 +50,6 @@ def r_squared(x: np.ndarray, y: np.ndarray, beta: np.ndarray) -> float:
     result = 1 - (res1 / res2)
     return result
 
-
 # calculate R-squared coefficients for both regressions
 print(f'R-squared for L1 regression on wine data: {r_squared(x, y, betas)}')         # 0.78813 
 print(f'R-squared for LInf regression on wine data: {r_squared(x, y, betas_inf)}')     # 0.80649

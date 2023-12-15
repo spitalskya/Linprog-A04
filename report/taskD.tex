@@ -13,31 +13,22 @@ Vytvorme funkciu \pyth|r_squared(x, y, beta)| - kde \pyth|x| je matica vektorov 
 \begin{python}
 def r_squared(x: np.ndarray, y: np.ndarray, beta: np.ndarray) -> float:
 	# calculate y-hat and mean of y vector
-	y_hat = beta[0] + np.dot(x, beta[1:])
+	y_hat = beta[0] + x @ beta[1:]
 	y_mean = np.mean(y)
 	
 	res1 = 0    # partial result for the numerator in the formula
 	res2 = 0    # partial result for the denominator in the formula
 	
 	# calculate the sums
-	for i in range(len(y)):
-		res1 += (y[i] - y_hat[i]) ** 2
-		res2 += (y[i] - y_mean) ** 2
+	res1 = np.sum((y - y_hat)**2)
+	res2 = np.sum((y - y_mean)**2)
 	
 	# calculate the R^2 coefficient
 	result = 1 - (res1 / res2)
 	return result
 \end{python}
 
-Implementujeme metódu na dátach \verb|A04wine.csv|. Načítame dáta pomocou \pyth|pandas.read_csv()|, rozdelíme ich do premenných (rovnako ako v predošlých úlohách):
-
-\begin{python}
-	data = pd.read_csv('data/A04wine.csv')
-	y = data['Price']
-	x = data[['WinterRain', 'AGST', 'HarvestRain', 'Age', 'FrancePop']]
-\end{python}
-
-Podobne ako vyššie, vyriešime potrebné LP problémy pre načítané dáta a vypočítame $R^2$ koeficient:
+Implementujeme metódu na dátach \verb|A04wine.csv|. Načítame dáta pomocou, rozdelíme ich do premenných, vyriešime potrebné LP problémy pre načítané dáta (rovnako ako v predošlých úlohách) a vypočítame $R^2$ koeficient:
 
 \begin{python}
 	betas = solve.x[:numberOfVariablesBeta]
