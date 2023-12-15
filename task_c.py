@@ -3,7 +3,7 @@ from scipy.optimize import linprog
 import pandas as pd
 
 #importing data and creating dataframes
-data = pd.read_csv('data\A04wine.csv')
+data = pd.read_csv('data/A04wine.csv')
 
 # Separate dependent variable (y) and independent variables (x)
 y = data['Price']
@@ -29,7 +29,7 @@ solve = linprog(c, A_ub, b_ub, bounds = [(None,None)]*(k+1) +[(0, None)] * len(x
 
 # extract variables(betas) and print them out
 betas = solve.x[:k+1]
-print(betas)
+print(betas)    #[-8.88e-01  1.58e-03  5.21e-01 -4.51e-03 1.13e-02 -2.21e-05]
 
 #---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -49,4 +49,4 @@ solve_inf = linprog(c_inf, A_ub_inf, b_ub_inf, bounds=[(None,None)]*(k+1)+[(0,No
 
 # extract betas and print them out
 betas_inf = solve_inf.x[:k+1]
-print(betas_inf)
+print(betas_inf)    # [ 3.48e+00  8.34e-04  6.00e-01 -3.34e-03 -2.30e-02 -1.20e-04]
