@@ -8,13 +8,13 @@ data = pd.read_csv('data/A04wine.csv')
 # Separate dependent variable (y) and independent variables (x)
 y = data['Price']
 x = data[['WinterRain','AGST', 'HarvestRain', 'Age', 'FrancePop']]
-# Calculate the number of variables (features) plus 1 for the intercept term
+# Calculate the number of variables (features)
 k = x.shape[1]
 
 #---------------------------------------------------------------------------------------------------------------------------------------
 
 # Formulating the linear programming problem for l1 norm (minimizing the sum of absolute values of coefficients)
-c = np.array([0]*(k+1) + [1] * len(x.values)) # Objective function coefficients
+c = np.array([0]*(k+1) + [1] * len(x.values)) # Objective function coefficients (plus 1 for the intercept term)
 
 A = np.block([np.ones((len(x.values),1)), np.array(x.values)]) # Concatenate coefficients of variables into one matrix
 
