@@ -31,8 +31,8 @@ def r_squared(x: np.ndarray, y: np.ndarray, beta: np.ndarray) -> float:
 Implementujeme metódu na dátach \verb|A04wine.csv|. Načítame dáta pomocou, rozdelíme ich do premenných, vyriešime potrebné LP problémy pre načítané dáta (rovnako ako v predošlých úlohách) a vypočítame $R^2$ koeficient:
 
 \begin{python}
-	betas = solve.x[:numberOfVariablesBeta]
-	betas_inf = solve_inf.x[:numberOfVariablesBeta]
+	betas = solve.x[:k+1]
+	betas_inf = solve_inf.x[:k+1]
 	
 	r_squared(x, y, betas)
 	r_squared(x, y, betas_inf)
