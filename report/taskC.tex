@@ -17,12 +17,14 @@ Vyberieme z dát dané nezávislé premenné \pyth|x| a závislú premennú \pyt
 \begin{python}
 y = data['Price']
 x = data[['WinterRain','AGST', 'HarvestRain', 'Age', 'FrancePop']]
+# Calculate the number of variables (features)
+k = x.shape[1]
 \end{python}
 
 Vytvoríme potrebné štruktúry pre zostavenie modelu normy $L^1$:
 
 \begin{python}
-c = np.array([0]*(k + 1) + [1] * len(x.values)) # Objective function coefficients
+c = np.array([0]*(k + 1) + [1] * len(x.values)) # Objective function coefficients (plus 1 for the intercept term)
 
 A = np.block([np.ones((len(x.values), 1)), np.array(x.values)]) # Concatenate coefficients of variables into one matrix
 \end{python}
