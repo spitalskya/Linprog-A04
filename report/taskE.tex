@@ -6,7 +6,7 @@
 
 \subsection{Spracovanie všeobecnej triedy pre $L^1$ a $L^{\infty}$ lineárnu regresiu}
 
-Vypracovali sme modul \pyth|Model| pre počítanie $L^1$ a $L^{\infty}$ lineárnej regresie z ľubovoľných číselných dát, ktorý využíva LP formulácie popísané vyššie. Konkrétne \pyth|L1Model| využíva formuláciu na minimalizovanie $L^1$ normy a \pyth|LInfModel| minimalizuje $L^{\infty}$ normu. Príklad použitia tohto modelu sa nachádza v \verb|model_demonstration.ipynb| Následne opíšeme jednotlivé metódy jednotlivých modelov.
+Vypracovali sme modul \pyth|Model| pre počítanie $L^1$ a $L^{\infty}$ lineárnej regresie pre ľubovoľné číselné dáta, ktorý využíva LP formulácie popísané v sekciách vyššie. Konkrétne \pyth|L1Model| využíva formuláciu na minimalizovanie $L^1$ normy a \pyth|LInfModel| minimalizuje $L^{\infty}$ normu. Príklad použitia tohto modelu sa nachádza v \verb|model_demonstration.ipynb|. Následne opíšeme jednotlivé metódy jednotlivých modelov.
 
 \subsubsection*{\pyth|Model.__init__(dependent_vect, independent_vect)|}
 
@@ -53,17 +53,17 @@ Vracia:
 
 \subsection{Porovnanie použitia $L^1$ a $L^{\infty}$ lineárnej regresie}
 
-\textit{Nasledujúce tvrdenia popisujú len naše pozorovania správania sa jednotlivých lineárnych regresii na generovaných dátach}
+\textit{Nasledujúce tvrdenia popisujú len naše pozorovania správania sa jednotlivých lineárnych regresií na generovaných dátach}
 
-Vyššie v sekcii \ref{sec:A} sme ukázali, že implementácie lineárnej regresie pomocou merania vzdialenost $L^1$ a $L^{\infty}$ normou majú optimálne riešenie, pre ľubovoľné vstupné dáta. Snažili sme sa odpozorovať, ako sa jednotlivé prístupy odlišujú pre nejaké konkrétne dáta.
+Vyššie v sekcii \ref{sec:A} sme ukázali, že implementácie lineárnej regresie pomocou merania vzdialenosti $L^1$ a $L^{\infty}$ normou majú optimálne riešenie, pre ľubovoľné vstupné dáta. Snažili sme sa odpozorovať, ako sa jednotlivé prístupy odlišujú pre nejaké konkrétne dáta.
 
-V dátach, v ktorých je výrazná lineárna závislosť, minimalizovanie $L^1$ normy veľmi dobre zachytáva práve tento lineárny vzťah, aj v prítomnosti odľahlých dát - outlierov. Toto správanie vie ale viesť aj k tzv. \textit{overfittingu}. Model príliš tesne zachytáva takéto správanie, čo môže viesť k horším odhadom pre budúce pozorovania.
+V dátach, v ktorých je výrazná lineárna závislosť, minimalizovanie $L^1$ normy veľmi dobre zachytáva práve tento lineárny vzťah, aj v prítomnosti odľahlých dát - \textit{outlierov}. Toto správanie vie ale viesť aj k tzv. \textit{overfittingu}. Model príliš tesne zachytáva takéto správanie, čo môže viesť k horším odhadom pre budúce pozorovania.
 
 Na druhej strane minimalizovanie $L^{\infty}$ normy je veľmi ovplyvňované outliermi. Aj pre \enquote{jasne} lineárne dáta s nejakými chybnými pozorovaniami, tieto dátové body výrazne odklonia regresnú priamku/nadrovinu. 
 
 \subsubsection{Minimalizácia váženého súčtu}
 
-Toto správanie $L^{\infty}$ lineárnej regresie môžeme využiť na zníženie overfittingu $L^1$ lineárnej regresie. Jeden z možných prístupov môže byť napríklad pomocou minimalizácie váženej sumy $\omega||y - \hat{y}||_1 + (1-\omega)||y - \hat{y}||_{\infty},~\omega \in [0;1]$. Formulovaná LP úloha vyzerá nasledovne (značenie sme prebrali z \eqref{P1} a \eqref{Pinf}):	
+Toto správanie $L^{\infty}$ lineárnej regresie sa môžeme pokúsiť využiť na zníženie overfittingu $L^1$ lineárnej regresie. Jeden z možných prístupov môže byť napríklad pomocou minimalizácie váženej sumy $\omega||y - \hat{y}||_1 + (1-\omega)||y - \hat{y}||_{\infty},~\omega \in [0;1]$. Formulovaná LP úloha vyzerá nasledovne (značenie sme prebrali z \eqref{P1} a \eqref{Pinf}):	
 
 
 \begin{align*}
@@ -166,13 +166,13 @@ Podobným spôsobom ukážeme, že táto úloha nadobúda optimálne riešenie. 
 	&\alpha \geq \mathbf{0}_{4n} 
 \end{align*}
 
-Vidíme, že primárna úloha je prípustná pre $\beta = \mathbf{0}_{k+1},~t=|y|,~\gamma=|\hat{y}|$ (využitím značenia ako v \ref{sec:1Optim} a \ref{sec:InfOptim}) a duálna úloha je prípustná pre $\alpha = \mathbf{0}_{4n}$, teda zo silnej duality obe riešenia nadobúdajú optimálne riešenie.
+Vidíme, že primárna úloha je prípustná pre $\beta = \mathbf{0}_{k+1},~t=|y|,~\gamma=|\hat{y}|$ (využitím značenia ako v \ref{sec:1Optim} a \ref{sec:InfOptim}) a duálna úloha je prípustná pre $\alpha = \mathbf{0}_{4n}$, teda, zo slabej duality, obe úlohy nadobúdajú optimálne riešenie.
 
 \newpage
 
 \subsubsection{Implementácia \pyth|WeightedL1LInfModel|}
 
-Takáto lineárna regresia je implementovaná v triede \pyth|WeightedL1LInfModel|. Jej používanie je rovnaké ako pri predchádzajúcich implementáciách. Jediná zmena je pre metódu \pyth|WeightedL1LInfModel.solve(omega)|, ktorá teraz očakáva parameter \pyth|omega: float| v intervale $[0;1]$.
+Takáto lineárna regresia je implementovaná v triede \pyth|WeightedL1LInfModel|. Jej používanie je rovnaké ako pri predchádzajúcich implementáciách. Jediná zmena je pre metódu \pyth|WeightedL1LInfModel.solve(omega)|, ktorá očakáva parameter \pyth|omega:float|, pričom akceptuje iba \pyth|omega|$\in [0;1]$.
 
 
 \begin{figure}[h!]
@@ -189,7 +189,7 @@ Takáto lineárna regresia je implementovaná v triede \pyth|WeightedL1LInfModel
 	\begin{subfigure}[b]{0.48\linewidth}
 		\includegraphics[width=\linewidth]{figs/all_three_random.png}
 	\end{subfigure}
-	\caption*{\centering Porovnanie správania sa jednotlivých lineárnych regresii, prvé tri grafy zobrazujú rovnaké lineárne dáta s jedným outlierom}
+	\caption*{\centering Porovnanie správania sa jednotlivých lineárnych regresii, prvé tri grafy zobrazujú rovnaké lineárne dáta s jedným outlierom, štvrtý zobrazuje použitie všetkých troch lineárnych regresií na lineárnych dátach s náhodným šumom}
 \end{figure}
 
 \end{document}

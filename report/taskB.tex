@@ -111,7 +111,7 @@ Na implementáciu formulovaných LP úloh využívame tri knižnice:
 \begin{itemize}
 	\item \pyth|numpy| - tvorenie matíc a vektorov, načítanie dát
 	\item \pyth|scipy.optimize| - implementovaný LP solver
-	\item \pyth|matplotlib.pyplot| na vykresľovanie grafov.
+	\item \pyth|matplotlib.pyplot| - vykresľovanie grafov
 \end{itemize}
 
 Dáta relevantné pre túto úlohu sú uložené v súbore \verb|data/A04plotregres.npz|. Jedná sa o 16 bodov v $\mathbb{R}^2$, kde prvá súradnica reprezentuje nezávislú premennú (vektor týchto súradníc označíme \pyth|x|) a druhá závislú premennú (označíme \pyth|y|). 
@@ -121,13 +121,13 @@ Dáta relevantné pre túto úlohu sú uložené v súbore \verb|data/A04plotreg
 Vytvorme si potrebné štruktúry pre využitie metódy \pyth|scipy.optimize.linprog| pre LP formuláciu s $L^1$ normou:
 
 \begin{python}
-c = np.array([0,0] + [1] * len(x)) #objective function vector, two zeros stand for betas
-A = np.matrix([[1] * len(x), x]).transpose()  
-I = np.identity(len(x)) # Identity matrix
+c = np.concatenate(([0, 0], np.ones(len(x))))   # objective function vector, zeros stand for betas
+A = np.block([np.ones((len(x),1)), x[:,np.newaxis]]) # creating matrix A
+I = np.identity(len(x))     # Identity matrix
 
-A_ub = np.block([[-A,-I], [A,-I]]) #creating a block matrix 
-b_ub = np.concatenate([-y, y]) #right side vector
-bounds = [(None, None), (None, None)] + [(0, None) for _ in range(len(x))] # bounds for variables
+A_ub = np.block([[-A,-I], [A,-I]])      # creating a block matrix 
+b_ub = np.concatenate([-y, y])          # right side vector
+bounds = [(None,None), (None,None)] + [(0,None) for _ in range(len(x))] # bounds for variables
 \end{python}
 
 Pomocou solvera získame vektor optimálnych $\beta$ koeficientov:
@@ -139,12 +139,12 @@ Pomocou solvera získame vektor optimálnych $\beta$ koeficientov:
 Podobne implementujeme $L^{\infty}$ formuláciu:
 
 \begin{python}
-c_inf = np.array([0,0,1]) #objective function vector
-A_inf = np.matrix([[1] * len(x), x]).transpose() 
-i_inf = np.array([[1] * len(x)]).transpose() # vector of ones
+c_inf = np.array([0, 0, 1])       # objective function vector
+A_inf = np.block([np.ones((len(x), 1)), x[:, np.newaxis]])
+i_inf = np.ones((len(x), 1))    # vector of ones
 
 A_ub_inf = np.block([[-A_inf, -i_inf], [A_inf, -i_inf]]) # creating a block matrix
-b_ub_inf = np.concatenate([-y, y])#right side vector
+b_ub_inf = np.concatenate([-y, y]) # right side vector
 bounds = [(None, None), (None, None), (0, None)]
 \end{python}
 
