@@ -48,15 +48,14 @@ class Model:
             print('Model is not solved')
             return 0.0
 
-        y_hat = self.beta[0] + np.dot(self.x_vect.transpose(), self.beta[1:])
+        y_hat = self.beta[0] + self.x_vect.transpose() @ self.beta[1:]
         y_mean = np.mean(self.y)
 
         res1 = 0
         res2 = 0
 
-        for i in range(len(self.y)):
-            res1 += (self.y[i] - y_hat[i]) ** 2
-            res2 += (self.y[i] - y_mean) ** 2
+        res1 = np.sum((self.y - y_hat)**2)
+        res2 = np.sum((self.y - y_mean)**2)
 
         result = 1 - (res1 / res2)
         return result
@@ -152,7 +151,7 @@ class L1Model(Model):
         :return: array of beta values
         """
         # form LP
-        c = np.array([0] * self.space_dim + [1] * self.var_count)
+        c = np.concatenate(([0] * self.space_dim, np.ones(self.var_count)))
         A = np.vstack([np.array([1] * self.var_count), self.x_vect]).transpose()
         I = np.identity(self.var_count)
         A_ub = np.block([[-A, -I], [A, -I]])
@@ -184,7 +183,7 @@ class LInfModel(Model):
         # form LP
         c = np.array([0] * self.space_dim + [1])
         A = np.vstack([np.array([1] * self.var_count), self.x_vect]).transpose()
-        ones = np.array([[1] * self.var_count]).transpose()
+        ones = np.ones((self.var_count, 1))
         A_ub = np.block([[-A, -ones], [A, -ones]])
         b_ub = np.concatenate([-self.y, self.y])
         # bounds
@@ -223,7 +222,7 @@ class WeightedL1LInfModel(Model):
         c = np.array([0] * self.space_dim + [omega] * self.var_count + [1 - omega])
         A = np.vstack([np.array([1] * self.var_count), self.x_vect]).transpose()
         I = np.identity(self.var_count)
-        ones = np.array([[1] * self.var_count]).transpose()
+        ones = np.ones((self.var_count, 1))
         zero_matrix = I * 0
         zeroes = ones * 0
         

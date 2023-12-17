@@ -141,12 +141,12 @@ Dokážme, že \eqref{P1} je úloha, ktorá nadobúda optimálne riešenie pre �
 			-y
 		\end{array}
 	\right) \\
-	|y| &\geq \mathbf{0}_{n} 
+	\mathbf{0}_{k+1} \in \mathbb{R}^{k+1},~|y| &\geq \mathbf{0}_{n} 
 \end{align*}
 
 \newpage
 
-Vidíme, že obe ohraničenia platia, čiže $\left(\mathbf{0}_{k+1}^T, |y|^T \right)^T$ je prípustné riešenie.
+Vidíme, že ohraničenia úlohy \eqref{P1} sú splnené, čiže $\left(\mathbf{0}_{k+1}^T, |y|^T \right)^T$ je prípustné riešenie.
 
 Optimalitu ukážeme zo slabej duality. Sformulujme duálnu úlohu pre duálne premenné $\alpha_1, \alpha_2 \in \mathbb{R}^{n}$:
 
@@ -199,7 +199,7 @@ Vidíme, že táto úloha je prípustná pre $\alpha_1 = \alpha_2 = \mathbf{0}_n
 
 \subsection{Minimalizovanie $L^{\infty}$ normy}
 
-Budeme používať rovnaké značenie pre predikovaný vektor hodnôt $\hat{y} = \mathbf{A}\beta$ ako pri formulácii $L^1$ normy. Zaveďme si skalárnu premennú $\gamma \in \mathbb{R}$, vektorom $\gamma\mathbf{1}_n$ ohraničíme vektor $y - \mathbf{A} \beta$. Úloha sa z minimalizácie $||y - \mathbf{A} \beta||_{\infty}$ prevedie na minimalizáciu $\gamma$.
+Budeme používať rovnaké značenie pre predikovaný vektor hodnôt $\hat{y} = \mathbf{A}\beta$, ako pri formulácii $L^1$ normy. Zaveďme si skalárnu premennú $\gamma \in \mathbb{R}$, vektorom $\gamma\mathbf{1}_n$ ohraničíme vektor $y - \mathbf{A} \beta$. Úloha sa z minimalizácie $||y - \mathbf{A} \beta||_{\infty}$ prevedie na minimalizáciu $\gamma$.
 
 \begin{align*}
 	-\gamma \mathbf{1}_n \leq y - \mathbf{A} \beta &\leq \gamma \mathbf{1}_n
@@ -280,7 +280,7 @@ Minimalizovanie $L^{\infty}$ normy ako úloha lineárneho programovania vyzerá 
 
 \subsubsection{Prípustnosť a optimalita}\label{sec:InfOptim}
 
-Podobný spôsobom ako vyššie ukážeme optimalitu \eqref{Pinf}. Nech $\beta = \mathbf{0}_{k+1}$ a $\gamma = |\tilde{y}|$, kde $|\tilde{y}| := |\max(y_1, y_2, \dots, y_n)|$ pre $y = (y_1, y_2, \dots, y_n)^T$:
+Podobný spôsobom ako vyššie ukážeme optimalitu \eqref{Pinf}. Nech $\beta = \mathbf{0}_{k+1}$ a $\gamma = |\tilde{y}|$, kde $|\tilde{y}| := \max(|y_1|, |y_2|, \dots, |y_n|)$ pre $y = (y_1, y_2, \dots, y_n)^T$:
 
 \begin{align*}
 	\left(
@@ -313,7 +313,7 @@ Podobný spôsobom ako vyššie ukážeme optimalitu \eqref{Pinf}. Nech $\beta =
 			-y
 		\end{array}
 	\right) \\
-	|\tilde{y}| &\geq 0 
+	\mathbf{0}_{k+1} \in \mathbb{R}^{k+1},~|\tilde{y}| &\geq 0 
 \end{align*}
 
 Obe ohraničenia platia, čiže $(\mathbf{0}_{k+1}^T, |\tilde{y}|)^T$ je prípustné riešenie. Sformulujme duálnu úlohu s duálnymi premennými $\alpha_1, \alpha_2 \in \mathbb{R}^n$:

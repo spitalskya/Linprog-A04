@@ -5,7 +5,7 @@
 \section{Predikcia kvality vína}\label{sec:C}
 V tejto úlohe sa snažíme predikovať kvalitu vína, inšpirovaní prístupom Orleya Ashenfeltera k predikcii cien vína z Bordeaux.
 
-Využívame dáta zo súboru \verb|A04wine.csv| a aplikujeme modely $L^1$ a $L^{\infty}$ z úlohy A. Budeme využívať podobný postup ako v úlohe B. Na implementáciu formulovaných LP úloh využívame:
+Využívame dáta zo súboru \verb|A04wine.csv| a aplikujeme modely $L^1$ a $L^{\infty}$ lineárnej regresie z úlohy \ref{sec:A}. Budeme využívať podobný postup ako v úlohe \ref{sec:B}. Na implementáciu formulovaných LP úloh využívame:
 \begin{itemize}
 	\item \pyth|pandas| - načítanie dát z \verb|csv| súboru
 	\item \pyth|numpy| - tvorenie matíc a vektorov
@@ -24,18 +24,19 @@ k = x.shape[1]
 Vytvoríme potrebné štruktúry pre zostavenie modelu normy $L^1$:
 
 \begin{python}
-c = np.array([0]*(k + 1) + [1] * len(x.values)) # Objective function coefficients (plus 1 for the intercept term)
-
+c = np.concatenate(([0]*(k + 1), np.ones(len(x.values)))) # Objective function coefficients (plus 1 for the intercept term)
 A = np.block([np.ones((len(x.values), 1)), np.array(x.values)]) # Concatenate coefficients of variables into one matrix
 \end{python}
 
-Naformulujeme problém a vyriešime pomocou \pyth|scipy.optimize.linprog|
+Naformulujeme problém a vyriešime pomocou \pyth|scipy.optimize.linprog|:
 
 \begin{python}
+# Formulate inequality constraints for L1 norm
 A_ub = np.block([[-A, -I], [A, -I]])
 b_ub = np.concatenate([-y, y])
+bounds = [(None, None)]*(k + 1) +[(0, None)] * len(x.values)
 
-solve = linprog(c, A_ub, b_ub, bounds = [(None, None)]*(k + 1) + [(0, None)] * len(x.values))
+solve = linprog(c, A_ub, b_ub, bounds=bounds)
 \end{python}
 
 Po vyriešení vyberieme z riešenia koeficienty, čo nám dá: 
@@ -51,14 +52,14 @@ Z týchto výsledkov môžeme usúdiť, že najviac pozitívne vplýva na cenu v
 Ďalej zostrojíme relevantné štruktúry a naformulujeme LP pre $L^{\infty}$ normu:
 
 \begin{python}
-c_inf = np.array([0]*(k+1) + [1]) # Objective function coefficients
+c_inf = np.concatenate(([0]*(k + 1), [1]))
+A_inf = np.block([np.ones((len(x.values), 1)), np.array(x.values)]) # Coefficients for independent variables for L-inf norm
+i_inf = np.ones((len(x.values), 1)) # Coefficients for gamma scalar variable
 
-A_inf = np.block([np.ones((len(x.values),1)), np.array(x.values)]) # Coefficients for independent variables for l-inf norm
-
-i_inf = np.ones((len(x.values), 1)) # Coefficients for values of vector t 
-# inequality constraints for l-inf norm
-A_ub_inf = np.block([[-A_inf,-i_inf],[A_inf,-i_inf]])
-b_ub_inf = np.concatenate([-y, y]) 
+# Formulate inequality constraints for L-inf norm
+A_ub_inf = np.block([[-A_inf, -i_inf], [A_inf, -i_inf]])
+b_ub_inf = np.concatenate([-y, y])
+bounds_inf = [(None, None)]*(k + 1) + [(0, None)] 
 \end{python}
 
 \newpage
@@ -66,7 +67,7 @@ b_ub_inf = np.concatenate([-y, y])
 Vyriešime aj tento problém pomocou \pyth|scipy.optimize.linprog()| pre $L^{\infty}$ normu a vyberieme $\beta$ koeficienty:
 
 \begin{python}
-solve_inf = linprog(c_inf, A_ub_inf, b_ub_inf, bounds=[(None, None)]*(k + 1) + [(0, None)])
+solve_inf = linprog(c_inf, A_ub_inf, b_ub_inf, bounds=bounds_inf)
 \end{python}
 
 \begin{gather*}
