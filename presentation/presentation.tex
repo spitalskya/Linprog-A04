@@ -1,0 +1,52 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{subfiles}
+
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{amscd}
+\usepackage{amssymb}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{pythonhighlight}
+\usepackage{titlesec}
+\usepackage[skip=0pt]{caption}
+\usepackage{dsfont}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{pdfpages}
+\renewcommand{\baselinestretch}{1.5}
+
+\usepackage[T1]{fontenc}                % slovencina
+\usepackage[utf8]{inputenc}
+\usepackage[slovak]{babel}
+
+\setlength\arraycolsep{1pt}  %medzera v zarovnani eqnarray 
+
+\title{A04 – Predikcia kvality vína, lineárna regresia pomocou $L^1$, $L^{\infty}$}
+\author{Piati proti optimalizácii \newline Tomáš Antal, Erik Božík, Róbert Kendereš,\newline Teo Pazera, Andrej Špitalský \newline 2DAV}
+\date{Január 2024}
+
+\setbeamerfont{title}{series=\bfseries}
+\setbeamerfont{author}{size=\small}
+\setbeamertemplate{navigation symbols}{} % hides navigation symbols
+
+\begin{document}
+
+\frame{\titlepage}
+
+\subfile{introduction}
+\subfile{A-LPformulation}
+\subfile{B-2Dvisualization}
+\subfile{C-wine-prediction}
+\subfile{D-r-squared}
+\subfile{E-model-class}
+\subfile{E-weighted-sum}
+\subfile{conclusion}
+
+\end{document}
