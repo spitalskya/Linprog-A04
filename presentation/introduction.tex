@@ -1,16 +1,52 @@
 \documentclass[presentation.tex]{subfiles} 
 
 \begin{document}
-	
+
 \begin{frame}
 
-\frametitle{Predstavenie úlohy}
+\frametitle{Predstavenie projektu - lineárna regresia}
 \begin{itemize}
-	\item lineárna regresia
-	\item predikovanie kvality vína
+	\item lineárna regresia - predikcia závislej premennej $y \in \mathbb{R}^n$ pomocou nezávislých $x_1,\dots,x_n \in \mathbb{R}^n$
+\end{itemize}
+\begin{align*}
+	\min~&||y - \hat{y}|| \\
+	&\hat{y} = \beta_0 + \beta_1x_1 + \dots + \beta_kx_k
+\end{align*}
+
+\begin{center}
+	\small
+	\begin{tabular}{| c || c | c | c | c | c |}
+		\hline
+		pozorovania & $x_1$ & $x_2$ & \dots & $x_k$ & $y$ \\
+		\hline
+		atribút 1 & 1 & 2 & \dots & 4 & 5 \\
+		\hline
+		\vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+		\hline
+		atribút n & 1 & 2 & \dots & 4 & 5 \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\begin{itemize}
+	\item vyjadriteľné ako úloha lineárneho programovania - $L^1$, $L^{\infty}$
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}
+	\frametitle{Predstavenie projektu - obsah}
+
+\begin{itemize}
+	\item formulácia LP úloh a dokázanie optimality 
+	\item implementácia v \pyth|Python|-e a predikcia kvality vína
+	\item počítanie a interpretácia $R^2$ koeficientu
+	\item implementácia všeobecnej triedy na počítanie $L^1$ a $L^{\infty}$ lineárnej regresie
+	\item minimalizácia váženej sumy noriem
+\end{itemize}
 
 \end{frame}
+
+
 	
 \end{document}
