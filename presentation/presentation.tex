@@ -1,4 +1,6 @@
+\PassOptionsToPackage{subsection=false}{beamerouterthememiniframes}
 \documentclass{beamer}
+
 \usepackage[utf8]{inputenc}
 \usepackage{subfiles}
 
@@ -34,11 +36,18 @@
 
 \setbeamerfont{title}{series=\bfseries}
 \setbeamerfont{author}{size=\small}
+\setbeamerfont{frametitle}{series=\bfseries}
 \setbeamertemplate{navigation symbols}{} % hides navigation symbols
+\setbeamertemplate{footline}[frame number]
+
+\usetheme{Szeged}
+\usecolortheme{beaver}
 
 \begin{document}
 
-\frame{\titlepage}
+\begin{frame}[noframenumbering, plain]
+	\titlepage
+\end{frame}
 
 \subfile{introduction}
 \subfile{A-LPformulation}
