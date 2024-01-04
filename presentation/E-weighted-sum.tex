@@ -6,8 +6,8 @@
 	\frametitle{Porovnanie $L^1$ a $L^{\infty}$ lineárnej regresie}
 	
 	\begin{itemize}
-		\item $L^1$ - veľmi dobre zachytáva lineárny vzťah, môže viesť k \textit{overfittingu}
-		\item $L^{\infty}$ - príliš ovplyňovaná outliermi
+		\item $L^1$ -- veľmi dobre zachytáva lineárny vzťah, môže viesť k \textit{overfittingu}
+		\item $L^{\infty}$ -- príliš ovplyňovaná outliermi
 	\end{itemize}
 	
 	\begin{columns}
@@ -31,8 +31,13 @@
 	
 	\begin{itemize}
 		\item redukcia \textit{overfittingu} $L^1$ regresie váženým súčtom s $L^{\infty}$ normou
+	\end{itemize}
+	\begin{equation*}
+		\min ~ \omega||y - \hat{y}||_1 + (1-\omega)||y - \hat{y}||_{\infty},~\omega \in [0;1]
+	\end{equation*}
+	\vspace{-0.8cm}
+	\begin{itemize}
 		\item stále implementovateľné ako úloha lineárneho programovania
-		\item nadobúda optimum
 	\end{itemize}
 {\scriptsize
 	\setlength{\abovedisplayskip}{6pt}
