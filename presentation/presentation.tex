@@ -11,6 +11,7 @@
 \usepackage{amsmath}
 \usepackage{amscd}
 \usepackage{amssymb}
+\usepackage{adjustbox}
 \usepackage[font=scriptsize]{caption}
 \usepackage{csquotes}
 \usepackage{graphicx}
@@ -48,6 +49,27 @@
 
 \usetheme{Szeged}
 \usecolortheme{beaver}
+
+\lstset{
+	language=Python,                     % Set the programming language to Python
+	basicstyle=\ttfamily\footnotesize,          % Set the basic font style and size
+	keywordstyle=\color{blue},           % Set the style for keywords (e.g., def, if)
+	commentstyle=\color{gray},           % Set the style for comments
+	stringstyle=\color{olive},           % Set the style for strings
+	identifierstyle=\color{black},       % Set the style for identifiers
+	frame=single,                        % Draw a frame around the code
+	breaklines=true,                     % Allow line breaks within the code
+	breakatwhitespace=true,              % Break lines at whitespace only
+	tabsize=4,                           % Set the tab size to 4 spaces
+	showstringspaces=false,              % Do not show spaces in strings
+	morekeywords={as, None, True, False},% Define additional keywords
+	extendedchars=true,                  % Allow for non-ASCII characters
+	captionpos=b,                        % Position of the caption (b: bottom)
+	belowcaptionskip=1\baselineskip,     % Space below the caption
+	abovecaptionskip=1\baselineskip      % Space above the caption
+}
+
+
 
 \begin{document}
 
