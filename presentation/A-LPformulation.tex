@@ -75,7 +75,7 @@
 		\end{align*}
 	\end{frame}
 	
-	\begin{frame}[shrink=0.5]
+	\begin{frame}
 		\frametitle{Minimalizovanie  $L^{\infty}$ normy}
 		\text Chceme minimalizovať normu $||y - \hat{y}||_{\infty}$ \\
 		\text Zavedieme skalárnu premennú $\gamma \in \mathbb{R}$, prevedieme na úlohu LP 
@@ -83,43 +83,45 @@
 			-\gamma \mathbf{1}_n \leq y - \mathbf{A} \beta &\leq \gamma \mathbf{1}_n
 		\end{align*}
 		\text Pomocou značenia z \eqref{eq:notation}, výsledná úloha:
-		\begin{align*}
-			\text{min}~ &
-			\left(
-			\begin{array}{c|c}
-				\mathbf{0}_{k+1}^T ~&~ 1
-			\end{array}
-			\right)
-			\left(
-			\begin{array}{c}
-				\beta \\
-				\hline
-				\gamma
-			\end{array}
-			\right) \\
-			&\left(
-			\begin{array}{c|c}
-				\mathbf{A} ~&~ \mathbf{1}_n \\
-				\hline
-				-\mathbf{A} ~&~ \mathbf{1}_n
-			\end{array}
-			\right)
-			\left(
-			\begin{array}{c}
-				\beta \\
-				\hline
-				\gamma
-			\end{array}
-			\right) 
-			\geq
-			\left(
-			\begin{array}{c}
-				y \\
-				\hline
-				-y
-			\end{array}
-			\right) \\
-			&\beta \in \mathbb{R}^{k+1},~\gamma \geq 0 
-		\end{align*}
+		\begin{footnotesize}
+			\begin{align*}
+				\text{min}~ &
+				\left(
+				\begin{array}{c|c}
+					\mathbf{0}_{k+1}^T ~&~ 1
+				\end{array}
+				\right)
+				\left(
+				\begin{array}{c}
+					\beta \\
+					\hline
+					\gamma
+				\end{array}
+				\right) \\
+				&\left(
+				\begin{array}{c|c}
+					\mathbf{A} ~&~ \mathbf{1}_n \\
+					\hline
+					-\mathbf{A} ~&~ \mathbf{1}_n
+				\end{array}
+				\right)
+				\left(
+				\begin{array}{c}
+					\beta \\
+					\hline
+					\gamma
+				\end{array}
+				\right) 
+				\geq
+				\left(
+				\begin{array}{c}
+					y \\
+					\hline
+					-y
+				\end{array}
+				\right) \\
+				&\beta \in \mathbb{R}^{k+1},~\gamma \geq 0 
+			\end{align*}
+		\end{footnotesize}
 	\end{frame}
 \end{document}
