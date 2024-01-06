@@ -31,13 +31,14 @@ bounds = [(None, None)]*(k + 1) + [(0, None)] * n
 	\begin{frame}[fragile]
 		\frametitle{Riešenie úlohy a vizualizácia}
 		\begin{columns}
-		\begin{column}{0.6\textwidth}
+		\begin{column}{0.58\textwidth}
 			\begin{python}
 solve = linprog(c, A_ub, b_ub, bounds=bounds)
 betas = solve.x[:k+1]
 			\end{python}
 		\end{column}
-		\begin{column}{0.4\textwidth}
+		\begin{column}{0.42\textwidth}
+			\vspace{0.5cm}
 			\captionsetup{justification=centering}
 			\includegraphics[width=1\linewidth]{../report/figs/task_b_plot-cropped.png}
 			\captionof*{figure}{priamky $L^1$ a $L^{\infty}$ lineárnych regresií pre arbitrárne dáta}

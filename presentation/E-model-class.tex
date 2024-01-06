@@ -3,21 +3,21 @@
 
 \begin{document}
 	\begin{frame}[fragile]
-		\frametitle{Nadstavba}
-                \begin{python}
+		\frametitle{Všeobecná trieda pre $L^1$ a $L^{\infty}$ lineárnu regresiu}
+        \begin{python}
 from models.models import L1Model, LInfModel
-                \end{python}
+        \end{python}
         \begin{columns}
-            \begin{column}{0.5\textwidth}
+            \begin{column}{0.55\textwidth}
                 \begin{itemize}
-                    \item Zovšeobecnenie problému
-                    \item Voľnosť dimenzionality
-                    \item Vstupný vektor $y$ a matica $X$
-                    \item Hodnoty $\beta$ výstupom
+                    \item zovšeobecnenie problému
+                    \item voľnosť dimenzionality
+                    \item vstupný vektor $y$ a matica $\mathbf{X}$
+                    \item hodnoty $\beta$ výstupom
                 \end{itemize}
             \end{column}
 
-            \begin{column}{0.5\textwidth}
+            \begin{column}{0.45\textwidth}
                 \begin{python}
 # inicializacia
 model1 = L1Model(y, X)
@@ -31,27 +31,31 @@ beta2 = model2.solve()
 	\end{frame}
 
     \begin{frame}[fragile]
-        \frametitle{Nadstavba}
-        \begin{multicols}{2}
-            \begin{itemize}
-                    \item Hodnota $R^2$
-                    \item \pyth|model.r2()|
-            \end{itemize}
-
-            \columnbreak
-
-            \begin{itemize}
-                    \item Vizualizácia pre 2D a 3D
-                    \item \pyth|model.visualize()|
-            \end{itemize}
-        \end{multicols}
+        \frametitle{Všeobecná trieda pre $L^1$ a $L^{\infty}$ lineárnu regresiu}
+        \begin{columns}
+        	\begin{column}{0.5\textwidth}
+        		\begin{itemize}
+        			\item hodnota $R^2$
+        			\item vizualizácia pre 2D a 3D
+        		\end{itemize}
+        	\end{column}
+        	\begin{column}{0.5\textwidth}
+        		\vspace{0.4cm}
+        		\begin{lstlisting}            	
+model.r2()
+model.visualize()
+        		\end{lstlisting}
+        	\end{column}
+        \end{columns}
 
         \begin{columns}
             \begin{column}{0.5\textwidth}
-                \includegraphics[width=1\linewidth]{2D_viz.png}
+            	\centering
+                \includegraphics[height=4cm, keepaspectratio]{2D_viz.png}
             \end{column}
             \begin{column}{0.5\textwidth}
-                \includegraphics[height=140, width=0.9\linewidth]{3D_viz.png}
+            	\centering
+                \includegraphics[height=4cm, keepaspectratio]{3D_viz.png}
             \end{column}
         \end{columns}
     \end{frame}
