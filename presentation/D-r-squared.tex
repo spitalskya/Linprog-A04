@@ -3,8 +3,48 @@
 \begin{document}
 	
 	\begin{frame}
-		\frametitle{D}
-		...
+		\frametitle{D - $R^2$ }
+		\begin{itemize}
+			\item koeficient determinácie
+			\item hodnota z intervalu [0, 1]
+			\item ako dobre aproximuje regresný model hodnoty závislých premenných
+			\item čím bližšie k 1, tým presnejší
+		\end{itemize}
+		
+		
+		
+
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{D - $R^2$ }
+		\begin{columns}
+			\begin{column}{0.5\textwidth}
+				\centering
+				\begin{align*}
+						&R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}
+				\end{align*}
+			\end{column}
+			\begin{column}{0.5\textwidth}
+				\begin{itemize}
+					\item rozdiely medzi skutočnými hodnotami $y$ a predpovedanými
+					\item  rozdiely medzi skutočnými hodnotami $y$ a priemerom
+				\end{itemize}
+				
+			\end{column}
+		\end{columns}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{D - $R^2$ }
+				\begin{itemize}
+					\item funkcia \pyth|r_squared(x, y, beta)| pomocou \pyth|numPy| 
+					\item použijeme na dátach A04wine.csv
+					\item získame koeficienty pre obe normy: \begin{align*} R^{2}_{(1)} &\approx  0.78813\\
+															     R^{2}_{(\infty)} &\approx 0.80649
+													\end{align*}
+				\end{itemize}
+			
 	\end{frame}
 	
-\end{document}
+\end{document} 
