@@ -24,7 +24,7 @@ I = np.identity(n)
 
 A_ub = np.block([[-A, -I], [A, -I]])
 b_ub = np.concatenate([-y, y])
-bounds = [(None, None)]*(k + 1) + [(0, None)] * n
+bounds = [(None, None)]*(k + 1) + [(0, None)]*n
 		\end{python}
 	\end{frame}
 	
@@ -41,7 +41,7 @@ betas = solve.x[:k+1]
 			\vspace{0.5cm}
 			\captionsetup{justification=centering}
 			\includegraphics[width=1\linewidth]{../report/figs/task_b_plot-cropped.png}
-			\captionof*{figure}{priamky $L^1$ a $L^{\infty}$ lineárnych regresií pre arbitrárne dáta}
+			\captionof*{figure}{$L^1$ a $L^{\infty}$ regresné priamky}
 		\end{column}
 		\end{columns}
 
